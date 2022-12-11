@@ -59,16 +59,21 @@
   "colors": {
     "scope": "css,scss,sass,less",
     "prefix": "clr",
-    "body": ["var(--colors-$1)"]
+    "body": ["color: var(--colors-$1);"]
   },
   "colors teal": {
     "scope": "css,scss,sass,less",
     "prefix": "clrn",
-    "body": ["var(--colors-navy-$1)"]
+    "body": ["color: var(--colors-navy-$1);"]
   },
   "shadows": {
     "scope": "css,scss,sass,less",
     "prefix": "shwc",
-    "body": ["var(--shadows-center-$1)"]
+    "body": ["box-shadow: var(--shadows-center-$1);"]
+  },
+  "borders": {
+    "scope": "css,scss,sass,less",
+    "prefix": "brs",
+    "body": ["border-radius: var(--border-radius-$1);"]
   }
 }
