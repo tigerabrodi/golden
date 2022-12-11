@@ -63,12 +63,12 @@
   },
   "colors teal": {
     "scope": "css",
-    "prefix": "clrt",
-    "body": ["var(--colors-teal-$1)"]
+    "prefix": "clrn",
+    "body": ["var(--colors-navy-$1)"]
   },
   "shadows": {
     "scope": "css",
-    "prefix": "shw",
-    "body": ["var(--shadows-$1)"]
+    "prefix": "shwc",
+    "body": ["var(--shadows-center-$1)"]
   }
 }

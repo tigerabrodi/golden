@@ -3,7 +3,6 @@ import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import RobotoMono500 from '@fontsource/roboto-mono/500.css'
 import Roboto400 from '@fontsource/roboto/400.css'
 import Roboto500 from '@fontsource/roboto/500.css'
-import Roboto600 from '@fontsource/roboto/600.css'
 import Roboto700 from '@fontsource/roboto/700.css'
 import {
   Links,
@@ -14,9 +13,11 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 
+import styles from './root.css'
+
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'New Remix App',
+  title: 'Golden',
   viewport: 'width=device-width,initial-scale=1',
 })
 
@@ -24,9 +25,9 @@ export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: Roboto400 },
     { rel: 'stylesheet', href: Roboto500 },
-    { rel: 'stylesheet', href: Roboto600 },
     { rel: 'stylesheet', href: Roboto700 },
     { rel: 'stylesheet', href: RobotoMono500 },
+    { rel: 'stylesheet', href: styles },
   ]
 }
 
