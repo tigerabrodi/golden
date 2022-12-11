@@ -23,6 +23,7 @@ import { useEffect } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import { z } from 'zod'
 
+import { ToastMessage } from './components'
 import toastStyles from './components/ToastMessage.css'
 import { getServerFirebase } from './firebase'
 import { FirebaseProvider } from './providers'
@@ -128,11 +129,23 @@ export default function App() {
 
   useEffect(() => {
     if (validationSessionErrorText) {
-      toast.error(validationSessionErrorText)
+      toast((t) => (
+        <ToastMessage
+          status="error"
+          message={validationSessionErrorText}
+          removeAlert={() => toast.dismiss(t.id)}
+        />
+      ))
     }
 
     if (validationSessionSuccessText) {
-      toast.success(validationSessionSuccessText)
+      toast((t) => (
+        <ToastMessage
+          status="success"
+          message={validationSessionSuccessText}
+          removeAlert={() => toast.dismiss(t.id)}
+        />
+      ))
     }
 
     // Necessary to have the `loaderData` here otherwise the effect won't re-run if the validation texts contain the same strings since string is a primitive type
