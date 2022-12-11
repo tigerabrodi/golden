@@ -1,9 +1,15 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/node'
+import type {
+  DataFunctionArgs,
+  LinksFunction,
+  MetaFunction,
+  Session,
+} from '@remix-run/node'
 
 import RobotoMono500 from '@fontsource/roboto-mono/500.css'
 import Roboto400 from '@fontsource/roboto/400.css'
 import Roboto500 from '@fontsource/roboto/500.css'
 import Roboto700 from '@fontsource/roboto/700.css'
+import { json, redirect } from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -11,13 +17,44 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from '@remix-run/react'
 import { useEffect } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
+import { z } from 'zod'
 
-import { ToastMessage } from './components'
 import toastStyles from './components/ToastMessage.css'
+import { getServerFirebase } from './firebase'
+import { FirebaseProvider } from './providers'
 import styles from './root.css'
+import { authGetSession } from './sessions/auth.server'
+import {
+  validationCommitSession,
+  validationGetSession,
+} from './sessions/validationStates.server'
+import {
+  ACCESS_TOKEN,
+  SET_COOKIE,
+  VALIDATION_STATE_ERROR,
+  VALIDATION_STATE_SUCCESS,
+} from './types'
+import { FirebaseOptionsSchema } from './types/firebase'
+import { getCookie } from './utils/getCookie'
+
+function getValidationTexts(validationSession: Session) {
+  const validationSessionErrorText =
+    z
+      .string()
+      .optional()
+      .parse(validationSession.get(VALIDATION_STATE_ERROR)) ?? null
+  const validationSessionSuccessText =
+    z
+      .string()
+      .optional()
+      .parse(validationSession.get(VALIDATION_STATE_SUCCESS)) ?? null
+
+  return { validationSessionErrorText, validationSessionSuccessText }
+}
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -36,18 +73,70 @@ export const links: LinksFunction = () => {
   ]
 }
 
+export const loader = async ({ request }: DataFunctionArgs) => {
+  const { firebaseAdminAuth, firebaseDb } = getServerFirebase()
+
+  const options = FirebaseOptionsSchema.parse(firebaseDb.app.options)
+
+  const validationSession = await validationGetSession(getCookie(request))
+  const validationTextsData = getValidationTexts(validationSession)
+
+  const authSession = await authGetSession(getCookie(request))
+
+  const token = authSession.get(ACCESS_TOKEN)
+
+  const pathname = new URL(request.url).pathname
+
+  const sessionHeaders = {
+    headers: {
+      [SET_COOKIE]: await validationCommitSession(validationSession),
+    },
+  }
+
+  try {
+    const decodedToken = await firebaseAdminAuth.verifySessionCookie(token)
+    const isInsideNoteRoutes = pathname.startsWith('/notebooks')
+
+    const userToken = await firebaseAdminAuth.createCustomToken(
+      decodedToken.uid
+    )
+
+    if (isInsideNoteRoutes) {
+      return json(
+        { ...validationTextsData, firebase: { options, userToken } },
+        sessionHeaders
+      )
+    } else {
+      return redirect('/notebooks/all-notes', sessionHeaders)
+    }
+  } catch (error) {
+    const isOnUnAuthPages =
+      pathname === '/login' || pathname === '/sign-up' || pathname === '/'
+    if (isOnUnAuthPages) {
+      return json({ ...validationTextsData, firebase: null }, sessionHeaders)
+    } else {
+      return redirect('/', sessionHeaders)
+    }
+  }
+}
+
 export default function App() {
+  const loaderData = useLoaderData<typeof loader>()
+
+  const { validationSessionErrorText, validationSessionSuccessText, firebase } =
+    loaderData
+
   useEffect(() => {
-    toast((t) => (
-      <ToastMessage
-        status="error"
-        message="Successfully logged in."
-        removeAlert={() => toast.dismiss(t.id)}
-      />
-    ))
+    if (validationSessionErrorText) {
+      toast.error(validationSessionErrorText)
+    }
+
+    if (validationSessionSuccessText) {
+      toast.success(validationSessionSuccessText)
+    }
 
     // Necessary to have the `loaderData` here otherwise the effect won't re-run if the validation texts contain the same strings since string is a primitive type
-  }, [])
+  }, [loaderData, validationSessionErrorText, validationSessionSuccessText])
 
   return (
     <html lang="en">
@@ -56,17 +145,19 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 2500,
-            style: { padding: 0, backgroundColor: 'transparent' },
-          }}
-        />
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
+        <FirebaseProvider firebase={firebase}>
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 2500,
+              style: { padding: 0, backgroundColor: 'transparent' },
+            }}
+          />
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </FirebaseProvider>
       </body>
     </html>
   )
