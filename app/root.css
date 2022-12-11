@@ -8,6 +8,8 @@
   --colors-black: black;
   --shadows-center-white: 0 0 5px white;
   --shadows-center-black: 0 4px 4px rgba(0, 0, 0, 0.5);
+  --border-radius-medium: 5px;
+  --border-radius-large: 10px;
 }
 
 /* Global Styles */

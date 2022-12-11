@@ -1,0 +1,32 @@
+.toast {
+  display: flex;
+  align-items: center;
+  background-color: var(--colors-navy-200);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadows-center-black);
+  padding: 14px 10px;
+  column-gap: 8px;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  p {
+    font-weight: 400;
+    font-size: calc(1rem * 16 / 16);
+    color: var(--colors-navy-700);
+    margin-right: 40px;
+  }
+
+  button {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+}

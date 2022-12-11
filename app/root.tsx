@@ -12,7 +12,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
+import { useEffect } from 'react'
+import { toast, Toaster } from 'react-hot-toast'
 
+import { ToastMessage } from './components'
+import toastStyles from './components/ToastMessage.css'
 import styles from './root.css'
 
 export const meta: MetaFunction = () => ({
@@ -28,10 +32,23 @@ export const links: LinksFunction = () => {
     { rel: 'stylesheet', href: Roboto700 },
     { rel: 'stylesheet', href: RobotoMono500 },
     { rel: 'stylesheet', href: styles },
+    { rel: 'stylesheet', href: toastStyles },
   ]
 }
 
 export default function App() {
+  useEffect(() => {
+    toast((t) => (
+      <ToastMessage
+        status="error"
+        message="Successfully logged in."
+        removeAlert={() => toast.dismiss(t.id)}
+      />
+    ))
+
+    // Necessary to have the `loaderData` here otherwise the effect won't re-run if the validation texts contain the same strings since string is a primitive type
+  }, [])
+
   return (
     <html lang="en">
       <head>
@@ -39,6 +56,13 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 2500,
+            style: { padding: 0, backgroundColor: 'transparent' },
+          }}
+        />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

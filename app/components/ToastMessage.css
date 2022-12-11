@@ -1,0 +1,31 @@
+.toast {
+  display: flex;
+  align-items: center;
+  background-color: var(--colors-navy-200);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadows-center-black);
+  padding: 14px 10px;
+  column-gap: 8px;
+}
+.toast svg {
+  width: 22px;
+  height: 22px;
+}
+.toast p {
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--colors-navy-700);
+  margin-right: 40px;
+}
+.toast button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toast button svg {
+  width: 26px;
+  height: 26px;
+}
+
+/*# sourceMappingURL=ToastMessage.css.map */
