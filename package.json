@@ -7,11 +7,12 @@
   "license": "MIT",
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev",
     "lint": "eslint --ext .tsx,.jsx,.js,.ts --ignore-path .gitignore app",
     "lint-fix": "eslint --ext .tsx,.jsx,.js,.ts --ignore-path .gitignore --fix app",
     "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "sass": "sass --watch app/:app/",
+    "dev": "concurrently \"npm run sass\" \"remix dev\""
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.8",
@@ -21,12 +22,14 @@
     "@remix-run/react": "^1.7.4",
     "@remix-run/vercel": "^1.7.4",
     "@vercel/node": "^2.4.4",
+    "concurrently": "^7.6.0",
     "firebase": "^9.13.0",
     "firebase-admin": "^11.2.0",
     "lodash.debounce": "^4.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-toast": "^2.4.0",
+    "sass": "^1.56.2",
     "uuid": "^9.0.0",
     "zod": "^3.19.1",
     "zod-form-data": "^1.2.2",

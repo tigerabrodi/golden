@@ -46,28 +46,28 @@
     "body": ["await expect($1).toBeVisible()"]
   },
   "Write calculated font size": {
-    "scope": "css",
+    "scope": "css,scss,sass,less",
     "prefix": "fnz",
     "body": ["font-size: calc(1rem * $1 / 16);"],
     "description": "Write the font size which calculates pixels and rem divided. Used to better understand the size of the font, but still let them be accessible as rems in the browser."
   },
   "Write media query": {
-    "scope": "css",
+    "scope": "css,scss,sass,less",
     "prefix": "mdq",
     "body": ["@media screen and (min-width: $1) {$2}"]
   },
   "colors": {
-    "scope": "css",
+    "scope": "css,scss,sass,less",
     "prefix": "clr",
     "body": ["var(--colors-$1)"]
   },
   "colors teal": {
-    "scope": "css",
+    "scope": "css,scss,sass,less",
     "prefix": "clrn",
     "body": ["var(--colors-navy-$1)"]
   },
   "shadows": {
-    "scope": "css",
+    "scope": "css,scss,sass,less",
     "prefix": "shwc",
     "body": ["var(--shadows-center-$1)"]
   }
