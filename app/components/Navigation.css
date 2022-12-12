@@ -1,0 +1,37 @@
+nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+}
+nav .logo {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+}
+nav .logo svg {
+  width: 22px;
+  height: 22px;
+}
+nav .logo span {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--colors-white);
+}
+nav .login {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--colors-white);
+  margin-left: auto;
+  margin-right: 34px;
+}
+nav .primary {
+  color: var(--colors-navy-700);
+  background-color: var(--colors-white);
+  border-radius: 5px;
+  box-shadow: var(--shadows-center-white);
+  padding: 5px;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=Navigation.css.map */

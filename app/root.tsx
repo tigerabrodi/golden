@@ -23,7 +23,8 @@ import { useEffect } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import { z } from 'zod'
 
-import { ToastMessage } from './components'
+import { Navigation, ToastMessage } from './components'
+import navigationStyles from './components/Navigation.css'
 import toastStyles from './components/ToastMessage.css'
 import { getServerFirebase } from './firebase'
 import { FirebaseProvider } from './providers'
@@ -71,6 +72,7 @@ export const links: LinksFunction = () => {
     { rel: 'stylesheet', href: RobotoMono500 },
     { rel: 'stylesheet', href: styles },
     { rel: 'stylesheet', href: toastStyles },
+    { rel: 'stylesheet', href: navigationStyles },
   ]
 }
 
@@ -159,6 +161,7 @@ export default function App() {
       </head>
       <body>
         <FirebaseProvider firebase={firebase}>
+          <Navigation />
           <Toaster
             position="top-center"
             toastOptions={{
