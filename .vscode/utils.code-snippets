@@ -59,12 +59,12 @@
   "colors": {
     "scope": "css,scss,sass,less",
     "prefix": "clr",
-    "body": ["color: var(--colors-$1);"]
+    "body": ["var(--colors-$1)"]
   },
   "colors teal": {
     "scope": "css,scss,sass,less",
     "prefix": "clrn",
-    "body": ["color: var(--colors-navy-$1);"]
+    "body": ["var(--colors-navy-$1)"]
   },
   "shadows": {
     "scope": "css,scss,sass,less",
