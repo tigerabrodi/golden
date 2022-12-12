@@ -35,6 +35,7 @@ body {
   flex-direction: column;
   align-items: center;
   background-color: var(--colors-navy-700);
+  padding: 0 93px;
 }
 
 /* Custom Resets */
