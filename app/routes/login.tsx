@@ -19,12 +19,19 @@ export default function Login() {
             id="email"
             name="email"
             placeholder="john@gmail.com"
+            required
           />
         </div>
 
         <div>
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            min={6}
+            required
+          />
         </div>
 
         <button type="submit">Login</button>
