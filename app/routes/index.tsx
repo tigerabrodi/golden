@@ -7,5 +7,13 @@ export const links: LinksFunction = () => {
 }
 
 export default function Index() {
-  return <div>hello world</div>
+  return (
+    <main className="home">
+      <h1>Golden let’s you take notes in Mardown effortlessy</h1>
+      <h2>
+        Meet the simplistic way of taking and organizing notes in Markdown.
+      </h2>
+      <div />
+    </main>
+  )
 }

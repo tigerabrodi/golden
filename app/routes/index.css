@@ -1,5 +1,31 @@
-div {
-  color: pink;
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.home h1 {
+  color: var(--colors-white);
+  font-weight: 500;
+  font-size: 2.25rem;
+  text-align: center;
+  padding-top: 50px;
+  width: 30ch;
+}
+.home h2 {
+  color: var(--colors-navy-200);
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 15px;
+  width: 40ch;
+}
+.home div {
+  width: 850px;
+  height: 510px;
+  margin-top: 50px;
+  background-color: var(--colors-navy-200);
 }
 
 /*# sourceMappingURL=index.css.map */
