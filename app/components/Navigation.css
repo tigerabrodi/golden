@@ -29,7 +29,7 @@ nav .login {
 nav .primary {
   color: var(--colors-navy-700);
   background-color: var(--colors-white);
-  border-radius: 5px;
+  border-radius: var(--border-radius-medium);
   box-shadow: var(--shadows-center-white);
   padding: 5px;
   font-weight: bold;
