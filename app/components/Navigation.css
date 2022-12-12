@@ -14,13 +14,14 @@ nav .logo svg {
   height: 22px;
 }
 nav .logo span {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1.5rem;
   color: var(--colors-white);
+  font-family: "Roboto Mono", monospace;
 }
 nav .login {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--colors-white);
   margin-left: auto;
   margin-right: 34px;
@@ -32,6 +33,7 @@ nav .primary {
   box-shadow: var(--shadows-center-white);
   padding: 5px;
   font-weight: bold;
+  font-size: 1.125rem;
 }
 
 /*# sourceMappingURL=Navigation.css.map */

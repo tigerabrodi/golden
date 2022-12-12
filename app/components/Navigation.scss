@@ -13,15 +13,16 @@ nav {
     }
 
     span {
-      font-weight: 700;
+      font-weight: 500;
       font-size: calc(1rem * 24 / 16);
       color: var(--colors-white);
+      font-family: 'Roboto Mono', monospace;
     }
   }
 
   .login {
     font-weight: 500;
-    font-size: calc(1rem * 16 / 16);
+    font-size: calc(1rem * 18 / 16);
     color: var(--colors-white);
     margin-left: auto;
     margin-right: 34px;
@@ -34,5 +35,6 @@ nav {
     box-shadow: var(--shadows-center-white);
     padding: 5px;
     font-weight: bold;
+    font-size: calc(1rem * 18 / 16);
   }
 }
