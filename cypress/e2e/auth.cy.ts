@@ -40,7 +40,7 @@ it('Should be able to sign up', () => {
   // Sign up
   cy.findByLabelText('Email').type(newUser.email)
   cy.findByLabelText('Password').type(newUser.password)
-  cy.findByLabelText('Confirm Password').type(newUser.password)
+  cy.findByLabelText('Confirm password').type(newUser.password)
 
   cy.findByRole('button', { name: 'Sign up' }).click()
   cy.findByRole('alert', { name: SIGNING_UP }).should('be.visible')
