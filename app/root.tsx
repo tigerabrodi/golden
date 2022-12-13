@@ -168,7 +168,11 @@ export default function App() {
             position="top-center"
             toastOptions={{
               duration: 2500,
-              style: { padding: 0, backgroundColor: 'transparent' },
+              style: {
+                padding: 0,
+                backgroundColor: 'transparent',
+                maxWidth: 700,
+              },
             }}
           />
           <Outlet />
