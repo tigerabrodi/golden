@@ -3,6 +3,7 @@ import { TestUser } from '../support/types'
 
 const SIGNED_IN_SUCCESS_MESSAGE = 'Successfully logged in!'
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
+const GOLDEN_HOME_HEADING = 'Golden let’s you take notes in Mardown effortlessy'
 
 const existingUser: TestUser = {
   email: 'tiger@gmail.com',
@@ -19,7 +20,7 @@ it('Should be able to validate confirm password', () => {
   cy.visit('/')
 
   cy.findByRole('heading', {
-    name: 'Golden let’s you take notes in Mardown effortlessy',
+    name: GOLDEN_HOME_HEADING,
   }).should('be.visible')
 
   cy.findByRole('link', { name: 'Sign up' }).click()
@@ -42,7 +43,7 @@ it('Should not be able to sign up with existing user.', () => {
   cy.visit('/')
 
   cy.findByRole('heading', {
-    name: 'Golden let’s you take notes in Mardown effortlessy',
+    name: GOLDEN_HOME_HEADING,
   }).should('be.visible')
 
   cy.findByRole('link', { name: 'Sign up' }).click()
@@ -66,7 +67,7 @@ it('Should be able to sign up', () => {
 
   cy.findByRole('link', { name: 'Golden' }).should('be.visible')
   cy.findByRole('heading', {
-    name: 'Golden let’s you take notes in Mardown effortlessy',
+    name: GOLDEN_HOME_HEADING,
   }).should('be.visible')
   cy.findByRole('heading', {
     name: 'Meet the simplistic way of taking and organizing notes in Markdown.',
@@ -99,13 +100,12 @@ it('Should be able to login.', () => {
   cy.visit('/')
 
   cy.findByRole('heading', {
-    name: 'Golden let’s you take notes in Mardown effortlessy',
+    name: GOLDEN_HOME_HEADING,
   }).should('be.visible')
 
   cy.findByRole('link', { name: 'Login' }).click()
   cy.findByRole('heading', { name: 'Login' }).should('be.visible')
 
-  // Sign up
   cy.findByLabelText('Email').type(existingUser.email)
   cy.findByLabelText('Password').type(existingUser.password)
 
@@ -121,13 +121,12 @@ it('Should not be able to login with wrong password.', () => {
   cy.visit('/')
 
   cy.findByRole('heading', {
-    name: 'Golden let’s you take notes in Mardown effortlessy',
+    name: GOLDEN_HOME_HEADING,
   }).should('be.visible')
 
   cy.findByRole('link', { name: 'Login' }).click()
   cy.findByRole('heading', { name: 'Login' }).should('be.visible')
 
-  // Sign up
   cy.findByLabelText('Email').type(existingUser.email)
   cy.findByLabelText('Password').type('kfnklsfnskdl')
 
@@ -137,4 +136,40 @@ it('Should not be able to login with wrong password.', () => {
   cy.findByRole('status')
     .findByText('Invalid email or password.')
     .should('be.visible')
+})
+
+it('Should be able to logout.', () => {
+  cy.visit('/')
+
+  cy.findByRole('heading', {
+    name: GOLDEN_HOME_HEADING,
+  }).should('be.visible')
+
+  cy.findByRole('button', { name: 'Logout' }).should('not.exist')
+
+  cy.findByRole('link', { name: 'Login' }).click()
+  cy.findByRole('heading', { name: 'Login' }).should('be.visible')
+
+  cy.findByLabelText('Email').type(existingUser.email)
+  cy.findByLabelText('Password').type(existingUser.password)
+
+  cy.findByRole('button', { name: 'Login' }).click()
+
+  // Toast Message
+  cy.findByRole('status').within(() => {
+    cy.findByText(SIGNED_IN_SUCCESS_MESSAGE).should('be.visible')
+    cy.findByRole('button', { name: 'Close' }).click()
+  })
+
+  cy.findByRole('heading', {
+    name: GOLDEN_HOME_HEADING,
+  }).should('not.exist')
+
+  cy.findByRole('button', { name: 'Logout' }).click()
+
+  cy.findByText('Successfully logged out.').should('be.visible')
+
+  cy.findByRole('heading', {
+    name: GOLDEN_HOME_HEADING,
+  }).should('be.visible')
 })
