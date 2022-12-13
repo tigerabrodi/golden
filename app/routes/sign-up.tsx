@@ -1,17 +1,29 @@
 import type { ActionFunction, LinksFunction } from '@remix-run/node'
 
+import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form } from '@remix-run/react'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 
 import styles from './auth.css'
 
+import { getServerFirebase } from '~/firebase'
+import { authCommitSession, authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
   validationGetSession,
 } from '~/sessions/validationStates.server'
-import { SET_COOKIE, VALIDATION_STATE_ERROR } from '~/types'
+import {
+  ACCESS_TOKEN,
+  ALL_NOTES,
+  FIVE_DAYS_IN_MILLISECONDS,
+  NOTEBOOKS,
+  SET_COOKIE,
+  VALIDATION_STATE_ERROR,
+  VALIDATION_STATE_SUCCESS,
+} from '~/types'
 import { getCookie } from '~/utils/getCookie'
 
 const EMAIL = 'email'
@@ -76,12 +88,15 @@ const FormSchema = zfd.formData(
 )
 
 export const action: ActionFunction = async ({ request }) => {
-  const [formData, validationSession] = await Promise.all([
+  const { firebaseAuth, firebaseAdminAuth } = getServerFirebase()
+
+  const [formData, validationSession, authSession] = await Promise.all([
     request.formData(),
     validationGetSession(getCookie(request)),
+    authGetSession(getCookie(request)),
   ])
 
-  const { password, confirmPassword } = FormSchema.parse(formData)
+  const { email, password, confirmPassword } = FormSchema.parse(formData)
 
   if (password !== confirmPassword) {
     validationSession.flash(VALIDATION_STATE_ERROR, "Passwords don't match.")
@@ -97,5 +112,49 @@ export const action: ActionFunction = async ({ request }) => {
     )
   }
 
-  return null
+  try {
+    const { user } = await createUserWithEmailAndPassword(
+      firebaseAuth,
+      email,
+      password
+    )
+
+    const token = await firebaseAdminAuth.createSessionCookie(
+      await user.getIdToken(),
+      {
+        expiresIn: FIVE_DAYS_IN_MILLISECONDS,
+      }
+    )
+
+    authSession.set(ACCESS_TOKEN, token)
+    validationSession.flash(VALIDATION_STATE_SUCCESS, 'Successfully signed up!')
+
+    const [authCommittedSession, validationCommitedSession] = await Promise.all(
+      [
+        authCommitSession(authSession),
+        validationCommitSession(validationSession),
+      ]
+    )
+
+    return redirect(`/${NOTEBOOKS}/${ALL_NOTES}`, {
+      headers: [
+        [SET_COOKIE, authCommittedSession],
+        [SET_COOKIE, validationCommitedSession],
+      ],
+    })
+  } catch (error) {
+    validationSession.flash(
+      VALIDATION_STATE_ERROR,
+      'Something went wrong, please try again.'
+    )
+
+    return json(
+      {},
+      {
+        headers: {
+          [SET_COOKIE]: await validationCommitSession(validationSession),
+        },
+      }
+    )
+  }
 }

@@ -11,6 +11,7 @@ import { getApp, getApps, initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { initializeFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
+import { z } from 'zod'
 
 import { config } from './firebase-config.server'
 
@@ -38,7 +39,10 @@ const firebaseStorage = once(() => {
 const firebaseAdminApp = once(() => {
   const serviceAccount: ServiceAccount = {
     projectId: config.projectId,
-    privateKey: process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY,
+    privateKey: z
+      .string()
+      .parse(process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY)
+      .replace(/\\n/g, '\n'),
     clientEmail: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL,
   }
 
