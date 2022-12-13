@@ -2,7 +2,7 @@ import { createNewUser } from '../support/factory'
 import { TestUser } from '../support/types'
 
 const SIGNED_IN_SUCCESS_MESSAGE = 'Signed in successfully!'
-const SIGNED_UP_SUCCESS_MESSAGE = 'Signed up successfully!'
+const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
 const SOMETHING_WENT_WRONG_MESSAGE =
   'Something went wrong, please fill in the values again!'
 
