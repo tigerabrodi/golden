@@ -35,5 +35,8 @@ nav .primary {
   font-weight: bold;
   font-size: 1.125rem;
 }
+nav form {
+  margin-left: auto;
+}
 
 /*# sourceMappingURL=Navigation.css.map */

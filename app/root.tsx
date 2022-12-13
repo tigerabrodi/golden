@@ -83,10 +83,12 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 
   const options = FirebaseOptionsSchema.parse(firebaseDb.app.options)
 
-  const validationSession = await validationGetSession(getCookie(request))
-  const validationTextsData = getValidationTexts(validationSession)
+  const [validationSession, authSession] = await Promise.all([
+    validationGetSession(getCookie(request)),
+    authGetSession(getCookie(request)),
+  ])
 
-  const authSession = await authGetSession(getCookie(request))
+  const validationTextsData = getValidationTexts(validationSession)
 
   const token = authSession.get(ACCESS_TOKEN)
 
@@ -100,7 +102,7 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 
   try {
     const decodedToken = await firebaseAdminAuth.verifySessionCookie(token)
-    const isInsideNoteRoutes = pathname.startsWith('/notebooks')
+    const isInsideNoteRoutes = pathname.startsWith(`/${NOTEBOOKS}`)
 
     const userToken = await firebaseAdminAuth.createCustomToken(
       decodedToken.uid
@@ -108,17 +110,24 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 
     if (isInsideNoteRoutes) {
       return json(
-        { ...validationTextsData, firebase: { options, userToken } },
+        {
+          ...validationTextsData,
+          isAuthenticated: true,
+          firebase: { options, userToken },
+        },
         sessionHeaders
       )
     } else {
       return redirect(`/${NOTEBOOKS}/${ALL_NOTES}`, sessionHeaders)
     }
   } catch (error) {
-    const isOnUnAuthPages =
+    const isNotOnAuthenticatedPages =
       pathname === '/login' || pathname === '/sign-up' || pathname === '/'
-    if (isOnUnAuthPages) {
-      return json({ ...validationTextsData, firebase: null }, sessionHeaders)
+    if (isNotOnAuthenticatedPages) {
+      return json(
+        { ...validationTextsData, isAuthenticated: false, firebase: null },
+        sessionHeaders
+      )
     } else {
       return redirect('/', sessionHeaders)
     }
