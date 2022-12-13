@@ -40,7 +40,30 @@ it('Should be able to validate confirm password', () => {
     .should('be.visible')
 })
 
-it.only('Should be able to sign up', () => {
+it.only('Should not be able to sign up with existing user.', () => {
+  cy.visit('/')
+
+  cy.findByRole('heading', {
+    name: 'Golden let’s you take notes in Mardown effortlessy',
+  }).should('be.visible')
+
+  cy.findByRole('link', { name: 'Sign up' }).click()
+  cy.findByRole('heading', { name: 'Sign up' }).should('be.visible')
+
+  // Sign up
+  cy.findByLabelText('Email').type(existingUser.email)
+  cy.findByLabelText('Password').type(existingUser.password)
+  cy.findByLabelText('Confirm password').type(existingUser.password)
+
+  cy.findByRole('button', { name: 'Sign up' }).click()
+
+  // Toast Message
+  cy.findByRole('status')
+    .findByText('User with this email already exists.')
+    .should('be.visible')
+})
+
+it('Should be able to sign up', () => {
   cy.visit('/')
 
   cy.findByRole('link', { name: 'Golden' }).should('be.visible')

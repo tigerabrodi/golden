@@ -1,9 +1,10 @@
 import type { ActionFunction, LinksFunction } from '@remix-run/node'
+import type { FirebaseError } from 'firebase/app'
 
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form } from '@remix-run/react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 
@@ -143,10 +144,15 @@ export const action: ActionFunction = async ({ request }) => {
       ],
     })
   } catch (error) {
-    validationSession.flash(
-      VALIDATION_STATE_ERROR,
-      'Something went wrong, please try again.'
-    )
+    const firebaseError = error as FirebaseError
+    const isEmailAlreadyInUse =
+      firebaseError.code === AuthErrorCodes.EMAIL_EXISTS
+
+    const errorMessage = isEmailAlreadyInUse
+      ? 'User with this email already exists.'
+      : 'Something went wrong, please try again.'
+
+    validationSession.flash(VALIDATION_STATE_ERROR, errorMessage)
 
     return json(
       {},
