@@ -20,3 +20,7 @@ export const INTENT = 'intent'
 export const NOTEBOOKS = 'notebooks'
 
 export const ALL_NOTES = 'all-notes'
+
+export const EMAIL = 'email'
+
+export const PASSWORD = 'password'

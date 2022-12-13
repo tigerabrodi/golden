@@ -19,16 +19,16 @@ import {
 import {
   ACCESS_TOKEN,
   ALL_NOTES,
+  EMAIL,
   FIVE_DAYS_IN_MILLISECONDS,
   NOTEBOOKS,
+  PASSWORD,
   SET_COOKIE,
   VALIDATION_STATE_ERROR,
   VALIDATION_STATE_SUCCESS,
 } from '~/types'
 import { getCookie } from '~/utils/getCookie'
 
-const EMAIL = 'email'
-const PASSWORD = 'password'
 const CONFIRM_PASSWORD = 'confirmPassword'
 
 export const links: LinksFunction = () => {
