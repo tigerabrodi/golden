@@ -1,10 +1,8 @@
 import { createNewUser } from '../support/factory'
 import { TestUser } from '../support/types'
 
-const SIGNED_IN_SUCCESS_MESSAGE = 'Signed in successfully!'
+const SIGNED_IN_SUCCESS_MESSAGE = 'Successfully logged in!'
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
-const SOMETHING_WENT_WRONG_MESSAGE =
-  'Something went wrong, please fill in the values again!'
 
 const existingUser: TestUser = {
   email: 'tiger@gmail.com',
@@ -40,7 +38,7 @@ it('Should be able to validate confirm password', () => {
     .should('be.visible')
 })
 
-it.only('Should not be able to sign up with existing user.', () => {
+it('Should not be able to sign up with existing user.', () => {
   cy.visit('/')
 
   cy.findByRole('heading', {
@@ -95,4 +93,48 @@ it('Should be able to sign up', () => {
 
   cy.location('pathname').should('eq', '/notebooks/all-notes')
   cy.findByRole('heading', { name: 'All notes' }).should('be.visible')
+})
+
+it('Should be able to login.', () => {
+  cy.visit('/')
+
+  cy.findByRole('heading', {
+    name: 'Golden let’s you take notes in Mardown effortlessy',
+  }).should('be.visible')
+
+  cy.findByRole('link', { name: 'Login' }).click()
+  cy.findByRole('heading', { name: 'Login' }).should('be.visible')
+
+  // Sign up
+  cy.findByLabelText('Email').type(existingUser.email)
+  cy.findByLabelText('Password').type(existingUser.password)
+
+  cy.findByRole('button', { name: 'Login' }).click()
+
+  // Toast Message
+  cy.findByRole('status')
+    .findByText(SIGNED_IN_SUCCESS_MESSAGE)
+    .should('be.visible')
+})
+
+it('Should not be able to login with wrong password.', () => {
+  cy.visit('/')
+
+  cy.findByRole('heading', {
+    name: 'Golden let’s you take notes in Mardown effortlessy',
+  }).should('be.visible')
+
+  cy.findByRole('link', { name: 'Login' }).click()
+  cy.findByRole('heading', { name: 'Login' }).should('be.visible')
+
+  // Sign up
+  cy.findByLabelText('Email').type(existingUser.email)
+  cy.findByLabelText('Password').type('kfnklsfnskdl')
+
+  cy.findByRole('button', { name: 'Login' }).click()
+
+  // Toast Message
+  cy.findByRole('status')
+    .findByText('Invalid email or password.')
+    .should('be.visible')
 })
