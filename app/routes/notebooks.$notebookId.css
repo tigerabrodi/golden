@@ -1,0 +1,48 @@
+.notes {
+  background-color: var(--colors-navy-400);
+  height: 100%;
+  width: 20%;
+  max-width: 300px;
+}
+.notes .header {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  column-gap: 10px;
+  border-bottom: 2px solid var(--colors-navy-200);
+}
+.notes .header h1 {
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--colors-white);
+}
+.notes .header form {
+  margin-left: auto;
+}
+.notes .header form button {
+  width: 24px;
+}
+.notes .header a {
+  width: 22px;
+}
+.notes .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.notes .content div {
+  margin: auto 0;
+}
+.notes .content div svg {
+  width: 110px;
+}
+.notes .content div h2 {
+  color: var(--colors-navy-200);
+  font-weight: 600;
+  font-size: 1.375rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/*# sourceMappingURL=notebooks.$notebookId.css.map */
