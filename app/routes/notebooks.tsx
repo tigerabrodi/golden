@@ -29,9 +29,9 @@ export default function Notebooks() {
             </Link>
           </div>
           <ul>
-            <Link to={`/${NOTEBOOKS}/notebook-1`}>General notes</Link>
-            <Link to={`/${NOTEBOOKS}/notebook-1`}>General notes</Link>
-            <Link to={`/${NOTEBOOKS}/notebook-1`}>General notes</Link>
+            <li>
+              <Link to={`/${NOTEBOOKS}/notebook-1`}>General notes</Link>
+            </li>
           </ul>
         </div>
       </div>

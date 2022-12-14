@@ -65,16 +65,23 @@ main {
       ul {
         display: flex;
         flex-direction: column;
-        width: 100%;
-        margin-top: 10px;
-        padding-left: 20px;
+        width: calc(100% + 20px);
+        margin: 10px -10px 0px -10px;
 
-        a {
-          color: var(--colors-white);
-          font-weight: 400;
-          font-size: calc(1rem * 14 / 16);
+        li {
           width: 100%;
-          padding: 7px 0;
+          list-style: none;
+          padding-left: 30px;
+
+          a {
+            color: var(--colors-white);
+            font-weight: 400;
+            font-size: calc(1rem * 14 / 16);
+            width: 100%;
+            padding: 7px 0;
+            display: block;
+          }
+
           &:hover {
             background-color: var(--colors-navy-700);
           }

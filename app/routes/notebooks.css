@@ -61,18 +61,23 @@ main .notebooks .notebooks-list div a svg {
 main .notebooks .notebooks-list ul {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-top: 10px;
-  padding-left: 20px;
+  width: calc(100% + 20px);
+  margin: 10px -10px 0px -10px;
 }
-main .notebooks .notebooks-list ul a {
+main .notebooks .notebooks-list ul li {
+  width: 100%;
+  list-style: none;
+  padding-left: 30px;
+}
+main .notebooks .notebooks-list ul li a {
   color: var(--colors-white);
   font-weight: 400;
   font-size: 0.875rem;
   width: 100%;
   padding: 7px 0;
+  display: block;
 }
-main .notebooks .notebooks-list ul a:hover {
+main .notebooks .notebooks-list ul li:hover {
   background-color: var(--colors-navy-700);
 }
 
