@@ -92,8 +92,10 @@ it('Should be able to sign up', () => {
     cy.findByRole('button', { name: 'Close' }).click()
   })
 
-  cy.location('pathname').should('eq', '/notebooks/all-notes')
-  cy.findByRole('heading', { name: 'All notes' }).should('be.visible')
+  cy.findByRole('heading', { name: 'General notes', level: 1 }).should(
+    'be.visible'
+  )
+  cy.findByRole('heading', { name: 'No notes.', level: 2 }).should('be.visible')
 })
 
 it('Should be able to login.', () => {
