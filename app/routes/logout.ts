@@ -1,4 +1,4 @@
-import type { ActionFunction } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 
 import { redirect } from '@remix-run/node'
 
@@ -10,7 +10,7 @@ import {
 import { SET_COOKIE, VALIDATION_STATE_SUCCESS } from '~/types'
 import { getCookie } from '~/utils/getCookie'
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: DataFunctionArgs) => {
   const [authSession, validationSession] = await Promise.all([
     authGetSession(getCookie(request)),
     validationGetSession(getCookie(request)),
