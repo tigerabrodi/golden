@@ -1,4 +1,4 @@
-import type { ActionFunction, LinksFunction } from '@remix-run/node'
+import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 import type { FirebaseError } from 'firebase/app'
 
 import { redirect } from '@remix-run/node'
@@ -10,7 +10,7 @@ import { zfd } from 'zod-form-data'
 
 import styles from './auth.css'
 
-import { getServerFirebase } from '~/firebase'
+import { createFirstGeneralNotebook, getServerFirebase } from '~/firebase'
 import { authCommitSession, authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
@@ -18,7 +18,6 @@ import {
 } from '~/sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES,
   EMAIL,
   FIVE_DAYS_IN_MILLISECONDS,
   NOTEBOOKS,
@@ -88,7 +87,7 @@ const FormSchema = zfd.formData(
   })
 )
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: DataFunctionArgs) => {
   const { firebaseAuth, firebaseAdminAuth } = getServerFirebase()
 
   const [formData, validationSession, authSession] = await Promise.all([
@@ -120,12 +119,17 @@ export const action: ActionFunction = async ({ request }) => {
       password
     )
 
-    const token = await firebaseAdminAuth.createSessionCookie(
+    const createCookiePromise = firebaseAdminAuth.createSessionCookie(
       await user.getIdToken(),
       {
         expiresIn: FIVE_DAYS_IN_MILLISECONDS,
       }
     )
+
+    const [token, generalNotebookId] = await Promise.all([
+      createCookiePromise,
+      createFirstGeneralNotebook(user.uid),
+    ])
 
     authSession.set(ACCESS_TOKEN, token)
     validationSession.flash(VALIDATION_STATE_SUCCESS, 'Successfully signed up!')
@@ -137,7 +141,7 @@ export const action: ActionFunction = async ({ request }) => {
       ]
     )
 
-    return redirect(`/${NOTEBOOKS}/${ALL_NOTES}`, {
+    return redirect(`/${NOTEBOOKS}/${generalNotebookId}`, {
       headers: [
         [SET_COOKIE, authCommittedSession],
         [SET_COOKIE, validationCommitedSession],
