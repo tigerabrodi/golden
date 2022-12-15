@@ -1,4 +1,4 @@
-import type { ActionFunction, LinksFunction } from '@remix-run/node'
+import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 
 import { json, redirect } from '@remix-run/node'
 import { Form } from '@remix-run/react'
@@ -72,7 +72,7 @@ const FormSchema = zfd.formData(
   })
 )
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: DataFunctionArgs) => {
   const { firebaseAuth, firebaseAdminAuth } = getServerFirebase()
 
   const [formData, validationSession, authSession] = await Promise.all([
