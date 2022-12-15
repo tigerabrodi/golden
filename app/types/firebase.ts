@@ -7,6 +7,15 @@ export const TimestampSchema = z.object({
 
 export type Timestamp = z.infer<typeof TimestampSchema>
 
+export const NotebookSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  ownerId: z.string(),
+  createdAt: TimestampSchema,
+})
+
+export type Notebook = z.infer<typeof NotebookSchema>
+
 export const FirebaseOptionsSchema = z.object({
   apiKey: z.string().optional(),
   authDomain: z.string().optional(),
