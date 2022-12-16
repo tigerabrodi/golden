@@ -97,7 +97,7 @@ export default function Notebook() {
             </button>
           </Form>
 
-          <Link to="/">
+          <Link to="/" prefetch="intent">
             <Delete />
           </Link>
         </div>
