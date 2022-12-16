@@ -2,6 +2,7 @@ import { createNewUser } from '../support/factory'
 
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
 const GENERAL_NOTES = 'General notes'
+const UNTITLED = 'Untitled'
 
 const newUser = createNewUser()
 
@@ -27,13 +28,24 @@ it('Should be able to create, edit, view and delete notes.', () => {
     cy.findByRole('button', { name: 'Close' }).click()
   })
 
+  // Page after sign up
   cy.findByRole('heading', { name: GENERAL_NOTES, level: 1 }).should(
     'be.visible'
   )
   cy.findByRole('heading', { name: 'No notes.', level: 2 }).should('be.visible')
-
   cy.findByRole('list')
     .findByRole('listitem')
     .findByRole('link', { name: GENERAL_NOTES })
     .should('be.visible')
+
+  // Assert page after note creation
+  cy.findByRole('button', { name: 'Create new note' }).click()
+  cy.findByRole('link', { name: UNTITLED }).should('be.visible')
+  cy.location('pathname').should('include', '/edit')
+
+  cy.findByLabelText('Note title').should('have.value', UNTITLED)
+
+  cy.findByRole('link', { name: 'View' }).should('be.visible')
+  cy.findByRole('link', { name: 'Delete' }).should('be.visible')
+  cy.findByRole('status', { name: 'Saved' }).should('be.visible')
 })
