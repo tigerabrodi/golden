@@ -7,11 +7,11 @@ import { zx } from 'zodix'
 
 import styles from './notebooks.$notebookId.css'
 
-import { getServerFirebase } from '~/firebase'
 import {
+  getServerFirebase,
   getNotebook,
   getNotesInsideNotebookByNotebookId,
-} from '~/firebase/read.server'
+} from '~/firebase'
 import { AddPen, Delete, PenWithPaper } from '~/icons'
 import { authGetSession } from '~/sessions/auth.server'
 import {
