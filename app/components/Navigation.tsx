@@ -10,7 +10,7 @@ export function Navigation() {
 
   return (
     <nav>
-      <Link to="/" className="logo">
+      <Link to="/" className="logo" prefetch="intent">
         <Diamond />
         <span>Golden</span>
       </Link>
@@ -23,10 +23,10 @@ export function Navigation() {
         </Form>
       ) : (
         <>
-          <Link to="/login" className="login">
+          <Link to="/login" className="login" prefetch="intent">
             Login
           </Link>
-          <Link to="/sign-up" className="primary">
+          <Link to="/sign-up" className="primary" prefetch="intent">
             Sign up
           </Link>
         </>
