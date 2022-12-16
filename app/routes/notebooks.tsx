@@ -61,7 +61,11 @@ export default function Notebooks() {
   return (
     <main>
       <div className="notebooks">
-        <Link to={`/${NOTEBOOKS}/${ALL_NOTES}`} className="all-notes-link">
+        <Link
+          to={`/${NOTEBOOKS}/${ALL_NOTES}`}
+          className="all-notes-link"
+          prefetch="intent"
+        >
           <Paper />
           <span>All notes</span>
         </Link>
@@ -70,7 +74,7 @@ export default function Notebooks() {
           <div>
             <Book />
             <p>Notebooks</p>
-            <Link to={`/${NOTEBOOKS}/add`}>
+            <Link to={`/${NOTEBOOKS}/add`} prefetch="intent">
               <Plus />
             </Link>
           </div>
@@ -78,7 +82,9 @@ export default function Notebooks() {
             <ul>
               {notebooks.map(({ id, name }) => (
                 <li key={id}>
-                  <Link to={`/${NOTEBOOKS}/${id}`}>{name}</Link>
+                  <Link to={`/${NOTEBOOKS}/${id}`} prefetch="intent">
+                    {name}
+                  </Link>
                 </li>
               ))}
             </ul>
