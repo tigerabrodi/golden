@@ -92,7 +92,7 @@ img {
   object-position: center;
 }
 
-/* @keyframes spinning {
+@keyframes spinning {
   0% {
     transform: rotate(0deg);
   }
@@ -104,15 +104,4 @@ img {
 
 .spinner {
   animation: spinning 0.3s linear infinite;
-  width: 40px;
-  height: 40px;
 }
-
-.spinner svg {
-  width: 100%;
-  height: 100%;
-}
-
-.spinner svg path {
-  fill: var(--colors-teal-800);
-} */
