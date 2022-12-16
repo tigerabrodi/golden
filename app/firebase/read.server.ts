@@ -1,10 +1,16 @@
 import type { CollectionReference, DocumentReference } from 'firebase/firestore'
-import type { Notebook } from '~/types/firebase'
+import type { Note, Notebook } from '~/types/firebase'
 
+import { collectionGroup, orderBy } from 'firebase/firestore'
 import { doc, getDoc } from 'firebase/firestore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 
-import { NOTEBOOKS_COLLECTION, NOTES_COLLECTION } from './constants'
+import {
+  CREATED_AT,
+  NOTEBOOKS_COLLECTION,
+  NOTES_COLLECTION,
+  OWNER_ID,
+} from './constants'
 import { getServerFirebase } from './firebase.server'
 
 import { NotebookSchema } from '~/types/firebase'
@@ -20,7 +26,7 @@ export async function getUserNotebooks(
   ) as CollectionReference<Notebook>
   const notebooksQuery = query(
     notebooksCollection,
-    where('ownerId', '==', ownerId)
+    where(OWNER_ID, '==', ownerId)
   )
 
   const notebooksSnapshot = await getDocs(notebooksQuery)
@@ -45,15 +51,35 @@ export async function getNotebook(notebookId: string): Promise<Notebook> {
 
 export async function getNotesInsideNotebookByNotebookId(
   notebookId: string
-): Promise<Array<Notebook>> {
+): Promise<Array<Note>> {
   const { firebaseDb } = getServerFirebase()
 
   const notesCollection = collection(
     firebaseDb,
     `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}`
-  ) as CollectionReference<Notebook>
+  ) as CollectionReference<Note>
 
   const notesSnapshot = await getDocs(notesCollection)
+  const notes = notesSnapshot.docs.map((doc) => doc.data())
+
+  return notes
+}
+
+export async function getUserNotes(ownerId: string): Promise<Array<Notebook>> {
+  const { firebaseDb } = getServerFirebase()
+
+  const notesCollection = collectionGroup(
+    firebaseDb,
+    NOTES_COLLECTION
+  ) as CollectionReference<Notebook>
+
+  const notesQuery = query(
+    notesCollection,
+    where(OWNER_ID, '==', ownerId),
+    orderBy(CREATED_AT, 'asc')
+  )
+
+  const notesSnapshot = await getDocs(notesQuery)
   const notebooks = notesSnapshot.docs.map((doc) => doc.data())
 
   return notebooks
