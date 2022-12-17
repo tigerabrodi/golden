@@ -13,8 +13,6 @@ import {
 } from './constants'
 import { getServerFirebase } from './firebase.server'
 
-import { NotebookSchema } from '~/types/firebase'
-
 export async function getUserNotebooks(
   ownerId: string
 ): Promise<Array<Notebook>> {
@@ -35,7 +33,9 @@ export async function getUserNotebooks(
   return notebooks
 }
 
-export async function getNotebook(notebookId: string): Promise<Notebook> {
+export async function getNotebook(
+  notebookId: string
+): Promise<Notebook | undefined> {
   const { firebaseDb } = getServerFirebase()
 
   const notebookDoc = doc(
@@ -46,7 +46,7 @@ export async function getNotebook(notebookId: string): Promise<Notebook> {
 
   const notebook = notebookSnapshot.data()
 
-  return NotebookSchema.parse(notebook)
+  return notebook
 }
 
 export async function getNotesInsideNotebookByNotebookId(
@@ -83,4 +83,23 @@ export async function getUserNotes(ownerId: string): Promise<Array<Notebook>> {
   const notebooks = notesSnapshot.docs.map((doc) => doc.data())
 
   return notebooks
+}
+
+export async function getNote({
+  notebookId,
+  noteId,
+}: {
+  notebookId: string
+  noteId: string
+}): Promise<Note | undefined> {
+  const { firebaseDb } = getServerFirebase()
+
+  const noteDoc = doc(
+    firebaseDb,
+    `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${noteId}`
+  ) as DocumentReference<Note>
+  const noteSnapshot = await getDoc(noteDoc)
+  const note = noteSnapshot.data()
+
+  return note
 }
