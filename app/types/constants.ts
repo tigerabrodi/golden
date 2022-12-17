@@ -24,3 +24,6 @@ export const ALL_NOTES = 'all-notes'
 export const EMAIL = 'email'
 
 export const PASSWORD = 'password'
+
+export const NOT_LOGGED_IN_ERROR_MESSAGE =
+  'You need to be logged in to access this page.'

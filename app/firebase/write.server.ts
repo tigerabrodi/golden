@@ -1,9 +1,9 @@
-import type { Notebook, Timestamp } from '~/types/firebase'
+import type { Note, Notebook, Timestamp } from '~/types/firebase'
 
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { v4 } from 'uuid'
 
-import { NOTEBOOKS_COLLECTION } from './constants'
+import { NOTEBOOKS_COLLECTION, NOTES_COLLECTION, UNTITLED } from './constants'
 import { getServerFirebase } from './firebase.server'
 
 const GENERAL_NOTES = 'General notes'
@@ -26,4 +26,31 @@ export async function createFirstGeneralNotebook(ownerId: string) {
   await setDoc(notebookDoc, newNotebook)
 
   return newNotebook.id
+}
+
+export async function createNewNoteWithUserId({
+  ownerId,
+  notebookId,
+}: {
+  ownerId: string
+  notebookId: string
+}) {
+  const { firebaseDb } = getServerFirebase()
+
+  const newNote: Note = {
+    id: v4(),
+    name: UNTITLED,
+    ownerId,
+    text: '',
+    createdAt: serverTimestamp() as unknown as Timestamp,
+  }
+
+  const noteDoc = doc(
+    firebaseDb,
+    `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${newNote.id}`
+  )
+
+  await setDoc(noteDoc, newNote)
+
+  return newNote.id
 }
