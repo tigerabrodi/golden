@@ -1,7 +1,7 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 
 import { json, redirect } from '@remix-run/node'
-import { Form, Link, Outlet, useLoaderData } from '@remix-run/react'
+import { Form, Link, Outlet, useLoaderData, useParams } from '@remix-run/react'
 import { z } from 'zod'
 import { zx } from 'zodix'
 
@@ -57,6 +57,19 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   try {
     const { uid: ownerId } = await firebaseAdminAuth.verifySessionCookie(token)
 
+    if (!notebook) {
+      validationSession.flash(
+        VALIDATION_STATE_ERROR,
+        'This notebook does not exist.'
+      )
+
+      return redirect(`/${NOTEBOOKS}/${ALL_NOTES}`, {
+        headers: {
+          [SET_COOKIE]: await validationCommitSession(validationSession),
+        },
+      })
+    }
+
     const isNotOwnerOfNotebook = notebook.ownerId !== ownerId
 
     if (isNotOwnerOfNotebook) {
@@ -87,6 +100,8 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
 export default function Notebook() {
   const { notebook, notes } = useLoaderData<typeof loader>()
 
+  const { noteId } = useParams<{ noteId: string }>()
+
   return (
     <>
       <div className="notes">
@@ -105,7 +120,15 @@ export default function Notebook() {
 
         <div className="content">
           {notes.length > 0 ? (
-            <div />
+            notes.map((note) => (
+              <Link
+                key={note.id}
+                to={`./${note.id}`}
+                aria-selected={noteId === note.id}
+              >
+                {note.name}
+              </Link>
+            ))
           ) : (
             <div>
               <PenWithPaper />

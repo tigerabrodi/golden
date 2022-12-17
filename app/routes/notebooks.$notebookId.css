@@ -1,8 +1,8 @@
 .notes {
   background-color: var(--colors-navy-400);
   height: 100%;
-  width: 20%;
-  max-width: 300px;
+  width: 25%;
+  max-width: 400px;
 }
 .notes .header {
   display: flex;
@@ -28,8 +28,9 @@
 .notes .content {
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
   align-items: center;
-  height: 100%;
+  width: 100%;
 }
 .notes .content div {
   margin: auto 0;
@@ -43,6 +44,25 @@
   font-size: 1.375rem;
   text-align: center;
   margin-top: 10px;
+}
+.notes .content a {
+  width: 100%;
+  padding: 10px 8px 25px 8px;
+  color: var(--colors-white);
+  font-weight: 500;
+  font-size: 1.0625rem;
+  border-bottom: 2px solid var(--colors-navy-600);
+  /* Ellipsis after second line*/
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.notes .content a:first-of-type {
+  margin-top: 10px;
+}
+.notes .content a[aria-selected=true] {
+  background-color: var(--colors-navy-200);
 }
 
 /*# sourceMappingURL=notebooks.$notebookId.css.map */
