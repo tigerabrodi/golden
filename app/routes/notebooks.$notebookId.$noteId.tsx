@@ -93,12 +93,12 @@ export default function Note() {
     <div className="note">
       <div className="header">
         <h2>{note.name}</h2>
-        <Link to="./edit" className="edit">
+        <Link to="./edit" className="edit" prefetch="intent">
           <span>Edit</span>
           <EditPen />
         </Link>
 
-        <Link to="./delete" className="delete">
+        <Link to="./delete" className="delete" prefetch="intent">
           <span>Delete</span>
           <Delete />
         </Link>
