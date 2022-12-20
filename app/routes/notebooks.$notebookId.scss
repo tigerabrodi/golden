@@ -57,13 +57,11 @@
       padding: 10px 8px 25px 8px;
       color: var(--colors-white);
       font-weight: 500;
-      font-size: calc(1rem * 17 / 16);
+      font-size: calc(1rem * 18 / 16);
       border-bottom: 2px solid var(--colors-navy-600);
 
-      /* Ellipsis after second line*/
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       overflow: hidden;
       &:first-of-type {
         margin-top: 10px;

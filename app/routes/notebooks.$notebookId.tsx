@@ -123,7 +123,7 @@ export default function Notebook() {
             notes.map((note) => (
               <Link
                 key={note.id}
-                to={`./${note.id}`}
+                to={`./${note.id}/view`}
                 aria-selected={noteId === note.id}
               >
                 {note.name}
