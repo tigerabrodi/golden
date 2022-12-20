@@ -14,24 +14,39 @@
   font-weight: 400;
   font-size: 1.25rem;
   color: var(--colors-white);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 200px;
 }
-.note .header .edit {
+.note .header input {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--colors-white);
+  background-color: transparent;
+  width: 200px;
+}
+.note .header .edit-view {
   display: flex;
   align-items: center;
-  column-gap: 5px;
-  padding: 6px;
+  column-gap: 8px;
+  padding: 6px 8px;
   border-radius: var(--border-radius-medium);
   box-shadow: var(--shadows-center-white);
   background-color: var(--colors-navy-700);
 }
-.note .header .edit span {
+.note .header .edit-view span {
   font-weight: 500;
   font-size: 1rem;
   color: var(--colors-white);
 }
-.note .header .edit svg {
-  width: 14px;
-  height: 14px;
+.note .header .edit-view .pen {
+  width: 16px;
+  height: 16px;
+}
+.note .header .edit-view .eye {
+  width: 20px;
+  height: 20px;
 }
 .note .header .delete {
   margin-left: auto;
