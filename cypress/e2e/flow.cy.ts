@@ -48,4 +48,8 @@ it('Should be able to create, edit, view and delete notes.', () => {
   cy.findByRole('link', { name: 'View' }).should('be.visible')
   cy.findByRole('link', { name: 'Delete' }).should('be.visible')
   cy.findByRole('status', { name: 'Saved' }).should('be.visible')
+
+  // Change Title
+
+  // View note
 })
