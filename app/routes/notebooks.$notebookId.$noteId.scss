@@ -31,8 +31,10 @@
     .edit-view {
       display: flex;
       align-items: center;
+      justify-content: center;
       column-gap: 8px;
-      padding: 6px 8px;
+      width: 80px;
+      height: 33px;
       border-radius: var(--border-radius-medium);
       box-shadow: var(--shadows-center-white);
       background-color: var(--colors-navy-700);
