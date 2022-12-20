@@ -14,13 +14,25 @@
       font-weight: 400;
       font-size: calc(1rem * 20 / 16);
       color: var(--colors-white);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 200px;
     }
 
-    .edit {
+    input {
+      font-size: calc(1rem * 20 / 16);
+      font-weight: 400;
+      color: var(--colors-white);
+      background-color: transparent;
+      width: 200px;
+    }
+
+    .edit-view {
       display: flex;
       align-items: center;
-      column-gap: 5px;
-      padding: 6px;
+      column-gap: 8px;
+      padding: 6px 8px;
       border-radius: var(--border-radius-medium);
       box-shadow: var(--shadows-center-white);
       background-color: var(--colors-navy-700);
@@ -30,9 +42,14 @@
         color: var(--colors-white);
       }
 
-      svg {
-        width: 14px;
-        height: 14px;
+      .pen {
+        width: 16px;
+        height: 16px;
+      }
+
+      .eye {
+        width: 20px;
+        height: 20px;
       }
     }
 

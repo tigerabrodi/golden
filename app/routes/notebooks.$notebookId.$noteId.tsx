@@ -1,14 +1,13 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 
 import { json, redirect } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { Outlet } from '@remix-run/react'
 import { z } from 'zod'
 import { zx } from 'zodix'
 
 import styles from './notebooks.$notebookId.$noteId.css'
 
 import { getNote, getServerFirebase } from '~/firebase'
-import { Delete, EditPen } from '~/icons'
 import { authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
@@ -74,7 +73,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
       })
     }
 
-    return json({ note })
+    return json({ note, notebookId })
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
@@ -87,24 +86,9 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
 }
 
 export default function Note() {
-  const { note } = useLoaderData<typeof loader>()
-
   return (
     <div className="note">
-      <div className="header">
-        <h2>{note.name}</h2>
-        <Link to="./edit" className="edit" prefetch="intent">
-          <span>Edit</span>
-          <EditPen />
-        </Link>
-
-        <Link to="./delete" className="delete" prefetch="intent">
-          <span>Delete</span>
-          <Delete />
-        </Link>
-      </div>
-
-      <div />
+      <Outlet />
     </div>
   )
 }
