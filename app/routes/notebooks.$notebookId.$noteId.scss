@@ -7,7 +7,6 @@
   .header {
     display: flex;
     align-items: center;
-    column-gap: 30px;
     padding: 10px;
 
     h2 {
@@ -52,6 +51,22 @@
       .eye {
         width: 20px;
         height: 20px;
+      }
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      margin-left: auto;
+      svg {
+        width: 24px;
+      }
+
+      span {
+        font-weight: 400;
+        font-size: calc(1rem * 20 / 16);
+        color: var(--colors-white);
       }
     }
 

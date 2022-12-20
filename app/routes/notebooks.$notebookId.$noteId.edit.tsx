@@ -1,6 +1,6 @@
 import { Link } from '@remix-run/react'
 
-import { Delete, Eye } from '~/icons'
+import { CloudCheck, Delete, Eye } from '~/icons'
 
 export const NOTE_NAME = 'noteName'
 
@@ -19,6 +19,11 @@ export default function Note() {
           <span>View</span>
           <Eye className="eye" />
         </Link>
+
+        <div className="status" role="status">
+          <CloudCheck />
+          <span>Saved</span>
+        </div>
 
         <Link to="../delete" className="delete" prefetch="intent">
           <span>Delete</span>

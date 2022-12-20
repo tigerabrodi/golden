@@ -7,7 +7,6 @@
 .note .header {
   display: flex;
   align-items: center;
-  column-gap: 30px;
   padding: 10px;
 }
 .note .header h2 {
@@ -49,6 +48,20 @@
 .note .header .edit-view .eye {
   width: 20px;
   height: 20px;
+}
+.note .header .status {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  margin-left: auto;
+}
+.note .header .status svg {
+  width: 24px;
+}
+.note .header .status span {
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--colors-white);
 }
 .note .header .delete {
   margin-left: auto;
