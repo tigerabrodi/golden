@@ -1,4 +1,4 @@
-import { createNewUser } from '../support/factory'
+import { createNewNote, createNewUser } from '../support/factory'
 
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
 const GENERAL_NOTES = 'General notes'
@@ -6,6 +6,7 @@ const UNTITLED = 'Untitled'
 const NOTE_NAME_LABEL = 'Note name'
 
 const newUser = createNewUser()
+const newNote = createNewNote()
 
 beforeEach(() => {
   cy.clearCookies()
@@ -52,6 +53,10 @@ it('Should be able to create, edit, view and delete notes.', () => {
   cy.findByRole('status', { name: 'Saved' }).should('be.visible')
 
   // Change Title
+  cy.findByLabelText(NOTE_NAME_LABEL).clear().type(newNote.name)
+  cy.findByRole('status', { name: 'Saving' }).should('be.visible')
+  cy.findByRole('link', { name: UNTITLED }).should('not.exist')
+  cy.findByRole('link', { name: newNote.name }).should('be.visible')
 
   // View note
 })
