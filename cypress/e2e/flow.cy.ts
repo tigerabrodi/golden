@@ -3,6 +3,7 @@ import { createNewUser } from '../support/factory'
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
 const GENERAL_NOTES = 'General notes'
 const UNTITLED = 'Untitled'
+const NOTE_TITLE_LABEL = 'Note title'
 
 const newUser = createNewUser()
 
@@ -43,8 +44,8 @@ it('Should be able to create, edit, view and delete notes.', () => {
   cy.findByRole('link', { name: UNTITLED }).should('be.visible')
   cy.location('pathname').should('include', '/edit')
 
-  cy.findByLabelText('Note title').should('have.value', UNTITLED)
-  cy.findByLabelText('Note title').should('be.focused')
+  cy.findByLabelText(NOTE_TITLE_LABEL).should('have.value', UNTITLED)
+  cy.findByLabelText(NOTE_TITLE_LABEL).should('be.focused')
 
   cy.findByRole('link', { name: 'View' }).should('be.visible')
   cy.findByRole('link', { name: 'Delete' }).should('be.visible')
