@@ -44,6 +44,7 @@ it('Should be able to create, edit, view and delete notes.', () => {
   cy.location('pathname').should('include', '/edit')
 
   cy.findByLabelText('Note title').should('have.value', UNTITLED)
+  cy.findByLabelText('Note title').should('be.focused')
 
   cy.findByRole('link', { name: 'View' }).should('be.visible')
   cy.findByRole('link', { name: 'Delete' }).should('be.visible')
