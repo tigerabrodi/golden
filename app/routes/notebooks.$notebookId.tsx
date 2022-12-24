@@ -13,6 +13,7 @@ import {
   getNotesInsideNotebookByNotebookId,
   createNewNoteWithUserId,
 } from '~/firebase'
+import { useGetNotesSubscription } from '~/hooks'
 import { AddPen, Delete, PenWithPaper } from '~/icons'
 import { authGetSession } from '~/sessions/auth.server'
 import {
@@ -45,12 +46,13 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
     })
   )
 
-  const [notebook, notes, authSession, validationSession] = await Promise.all([
-    getNotebook(notebookId),
-    getNotesInsideNotebookByNotebookId(notebookId),
-    authGetSession(getCookie(request)),
-    validationGetSession(getCookie(request)),
-  ])
+  const [notebook, initialNotes, authSession, validationSession] =
+    await Promise.all([
+      getNotebook(notebookId),
+      getNotesInsideNotebookByNotebookId(notebookId),
+      authGetSession(getCookie(request)),
+      validationGetSession(getCookie(request)),
+    ])
 
   const token = authSession.get(ACCESS_TOKEN)
 
@@ -85,7 +87,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
       })
     }
 
-    return json({ notebook, notes })
+    return json({ notebook, initialNotes })
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
@@ -98,9 +100,14 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
 }
 
 export default function Notebook() {
-  const { notebook, notes } = useLoaderData<typeof loader>()
+  const { notebook, initialNotes } = useLoaderData<typeof loader>()
 
   const { noteId } = useParams<{ noteId: string }>()
+
+  const { notes } = useGetNotesSubscription({
+    notebookId: notebook.id,
+    initialNotes,
+  })
 
   return (
     <>
