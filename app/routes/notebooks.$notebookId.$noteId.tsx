@@ -45,9 +45,9 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   try {
     const { uid: ownerId } = await firebaseAdminAuth.verifySessionCookie(token)
 
-    const note = await getNote({ notebookId, noteId })
+    const initialNote = await getNote({ notebookId, noteId })
 
-    if (!note) {
+    if (!initialNote) {
       validationSession.flash(
         VALIDATION_STATE_ERROR,
         'This note does not exist.'
@@ -59,7 +59,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
       })
     }
 
-    const isNotOwnerOfNote = note.ownerId !== ownerId
+    const isNotOwnerOfNote = initialNote.ownerId !== ownerId
 
     if (isNotOwnerOfNote) {
       validationSession.flash(
@@ -73,7 +73,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
       })
     }
 
-    return json({ note, notebookId })
+    return json({ initialNote, notebookId })
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
