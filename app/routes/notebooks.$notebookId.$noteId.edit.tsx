@@ -33,7 +33,7 @@ export default function Note() {
     throw new Error('Note not found')
   }
 
-  const [noteTitle] = useState(noteLoaderData.note.name || '')
+  const [noteName] = useState(noteLoaderData.note.name || '')
   const [savingStatus] = useState<Status>('idle')
   const savingLabel = savingStatus === 'loading' ? 'Saving' : 'Saved'
 
@@ -42,10 +42,10 @@ export default function Note() {
       <div className="header">
         <input
           type="text"
-          aria-label="Note title"
+          aria-label="Note name"
           id={NOTE_NAME}
           name={NOTE_NAME}
-          value={noteTitle}
+          value={noteName}
           autoFocus={isNewlyCreated}
         />
         <Link to="../view" className="edit-view" prefetch="intent">
