@@ -29,7 +29,7 @@ import {
 } from '~/types'
 import { getCookie } from '~/utils/getCookie'
 
-const IS_NEWLY_CREATED = 'isNewlyCreated'
+export const IS_NEWLY_CREATED = 'isNewlyCreated'
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }]

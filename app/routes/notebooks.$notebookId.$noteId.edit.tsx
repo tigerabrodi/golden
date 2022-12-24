@@ -1,15 +1,30 @@
 import type { loader as noteLoader } from './notebooks.$notebookId.$noteId'
+import type { DataFunctionArgs } from '@remix-run/node'
 import type { Status } from '~/types'
 
-import { Link } from '@remix-run/react'
+import { json } from '@remix-run/node'
+import { Link, useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
+import { zx } from 'zodix'
+
+import { IS_NEWLY_CREATED } from './notebooks.$notebookId'
 
 import { useLoaderRouteData } from '~/hooks'
 import { CloudCheck, Delete, Eye } from '~/icons'
 
 export const NOTE_NAME = 'noteName'
 
+export const loader = async ({ request }: DataFunctionArgs) => {
+  const { isNewlyCreated } = zx.parseQuery(request, {
+    [IS_NEWLY_CREATED]: zx.BoolAsString.optional(),
+  })
+
+  return json({ isNewlyCreated })
+}
+
 export default function Note() {
+  const { isNewlyCreated } = useLoaderData<typeof loader>()
+
   const noteLoaderData = useLoaderRouteData<typeof noteLoader>(
     'routes/notebooks.$notebookId.$noteId'
   )
@@ -31,6 +46,7 @@ export default function Note() {
           id={NOTE_NAME}
           name={NOTE_NAME}
           value={noteTitle}
+          autoFocus={isNewlyCreated}
         />
         <Link to="../view" className="edit-view" prefetch="intent">
           <span>View</span>
