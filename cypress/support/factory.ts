@@ -1,10 +1,35 @@
-import type { TestUser } from './types'
-
 import { faker } from '@faker-js/faker'
+
+type TestUser = {
+  email: string
+  password: string
+}
+
+type TestNote = {
+  name: string
+  text: string
+}
+
+type TestNotebook = {
+  name: string
+}
 
 export function createNewUser(): TestUser {
   return {
     email: faker.internet.email(),
     password: faker.internet.password(),
+  }
+}
+
+export function createNewNote(): TestNote {
+  return {
+    name: faker.random.words(2),
+    text: faker.random.words(10),
+  }
+}
+
+export function createNewNotebook(): TestNotebook {
+  return {
+    name: faker.random.words(2),
   }
 }
