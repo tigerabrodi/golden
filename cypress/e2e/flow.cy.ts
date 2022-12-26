@@ -4,6 +4,8 @@ const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
 const GENERAL_NOTES = 'General notes'
 const UNTITLED = 'Untitled'
 const NOTE_NAME_LABEL = 'Note name'
+const SAVING = 'Saving'
+const SAVED = 'Saved'
 
 const newUser = createNewUser()
 const newNote = createNewNote()
@@ -50,13 +52,20 @@ it('Should be able to create, edit, view and delete notes.', () => {
 
   cy.findByRole('link', { name: 'View' }).should('be.visible')
   cy.findByRole('link', { name: 'Delete' }).should('be.visible')
-  cy.findByRole('status', { name: 'Saved' }).should('be.visible')
+  cy.findByRole('status', { name: SAVED }).should('be.visible')
 
   // Change Title
   cy.findByLabelText(NOTE_NAME_LABEL).clear().type(newNote.name)
-  cy.findByRole('status', { name: 'Saving' }).should('be.visible')
+  cy.findByRole('status', { name: SAVING }).should('be.visible')
   cy.findByRole('link', { name: UNTITLED }).should('not.exist')
   cy.findByRole('link', { name: newNote.name }).should('be.visible')
 
+  // Add content
+  cy.findByLabelText('Markdown content').type(newNote.content)
+  cy.findByRole('status', { name: SAVING }).should('be.visible')
+  cy.findByRole('status', { name: SAVED }).should('be.visible')
+
   // View note
+  cy.findByRole('link', { name: 'View' }).click()
+  cy.findByText(newNote.content).should('be.visible')
 })
