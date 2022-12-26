@@ -36,8 +36,8 @@ export default function Note() {
   const firebaseContext = useFirebase()
   const { notebookId } = useParams<{ notebookId: string }>()
 
-  const [savingStatus, setSavingStatus] = useState<Status>('idle')
-  const savingLabel = savingStatus === 'loading' ? 'Saving' : 'Saved'
+  const [savingNameStatus, setSavingNameStatus] = useState<Status>('idle')
+  const savingLabel = savingNameStatus === 'loading' ? 'Saving' : 'Saved'
 
   if (!noteLoaderData || !notebookId) {
     throw new Error('Note/notebook not found')
@@ -55,14 +55,14 @@ export default function Note() {
   const handleNoteNameChange = useCallback(
     debounce(async (noteName: string) => {
       if (firebaseContext?.firebaseDb) {
-        setSavingStatus('loading')
+        setSavingNameStatus('loading')
         const noteDoc = doc(
           firebaseContext.firebaseDb,
           // Using initial id here because note.id could be stale
           `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${initialNote.id}`
         )
         await updateDoc(noteDoc, { name: noteName })
-        setSavingStatus('success')
+        setSavingNameStatus('success')
       }
     }, 500),
     [firebaseContext]
@@ -81,7 +81,7 @@ export default function Note() {
 
     handleNoteNameChange(note.name)?.catch((error) => {
       console.error(error)
-      setSavingStatus('error')
+      setSavingNameStatus('error')
     })
   }, [note.name, shouldNotUpdateNoteName, handleNoteNameChange])
 
