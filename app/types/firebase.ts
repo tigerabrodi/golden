@@ -21,7 +21,7 @@ export type Notebook = z.infer<typeof NotebookSchema>
 export const NoteSchema = z.object({
   id: z.string(),
   name: z.string(),
-  text: z.string(),
+  content: z.string(),
   [OWNER_ID]: z.string(),
   [CREATED_AT]: TimestampSchema,
 })

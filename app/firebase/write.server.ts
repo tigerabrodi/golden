@@ -41,7 +41,7 @@ export async function createNewNoteWithUserId({
     id: v4(),
     name: UNTITLED,
     ownerId,
-    text: '',
+    content: '',
     createdAt: serverTimestamp() as unknown as Timestamp,
   }
 

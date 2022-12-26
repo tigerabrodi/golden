@@ -7,7 +7,7 @@ type TestUser = {
 
 type TestNote = {
   name: string
-  text: string
+  content: string
 }
 
 type TestNotebook = {
@@ -24,7 +24,7 @@ export function createNewUser(): TestUser {
 export function createNewNote(): TestNote {
   return {
     name: faker.random.words(2),
-    text: faker.random.words(10),
+    content: faker.random.words(10),
   }
 }
 
