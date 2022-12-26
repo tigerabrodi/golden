@@ -14,9 +14,9 @@ export default function Note() {
   return noteLoaderData ? (
     <>
       <div className="header">
-        <h2>{noteLoaderData.note.name}</h2>
+        <h2>{noteLoaderData.initialNote.name}</h2>
         <Link
-          to={`/${NOTEBOOKS}/${noteLoaderData.notebookId}/${noteLoaderData.note.id}/edit`}
+          to={`/${NOTEBOOKS}/${noteLoaderData.notebookId}/${noteLoaderData.initialNote.id}/edit`}
           className="edit-view"
           prefetch="intent"
         >
@@ -25,7 +25,7 @@ export default function Note() {
         </Link>
 
         <Link
-          to={`/${NOTEBOOKS}/${noteLoaderData.notebookId}/${noteLoaderData.note.id}/view/delete`}
+          to={`/${NOTEBOOKS}/${noteLoaderData.notebookId}/${noteLoaderData.initialNote.id}/view/delete`}
           className="delete"
           prefetch="intent"
         >
