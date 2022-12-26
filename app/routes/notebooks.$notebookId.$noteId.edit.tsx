@@ -118,7 +118,7 @@ export default function Note() {
         </Link>
       </div>
 
-      <div />
+      <textarea name="content" aria-label="Markdown content" />
     </>
   )
 }
