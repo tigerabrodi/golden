@@ -109,5 +109,36 @@
   border-radius: 2px;
   border: 5px solid var(--colors-navy-200);
 }
+.note .markdown {
+  padding: 10px;
+  color: var(--colors-white);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+.note .markdown *:first-of-type {
+  margin-top: 0;
+}
+.note .markdown h1,
+.note .markdown h2,
+.note .markdown h3 {
+  margin-top: 15px;
+}
+.note .markdown h4,
+.note .markdown h5,
+.note .markdown h6 {
+  margin-top: 8px;
+}
+.note .markdown::-webkit-scrollbar {
+  width: 0.4rem;
+}
+.note .markdown::-webkit-scrollbar-track {
+  background-color: var(--colors-navy-700);
+}
+.note .markdown::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  border: 5px solid var(--colors-navy-200);
+}
 
 /*# sourceMappingURL=notebooks.$notebookId.$noteId.css.map */

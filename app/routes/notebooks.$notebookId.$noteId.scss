@@ -122,4 +122,42 @@
       border: 5px solid var(--colors-navy-200);
     }
   }
+
+  .markdown {
+    padding: 10px;
+    color: var(--colors-white);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    *:first-of-type {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 15px;
+    }
+
+    h4,
+    h5,
+    h6 {
+      margin-top: 8px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--colors-navy-700);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      border: 5px solid var(--colors-navy-200);
+    }
+  }
 }
