@@ -1,11 +1,6 @@
-import type { LinksFunction } from '@remix-run/node'
+import { links } from './notebooks.$notebookId.index'
+import PlaceholderRoute from './notebooks.$notebookId.index'
 
-import styles from './notebooks.$notebookId.index.css'
+export { links }
 
-export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }]
-}
-
-export default function Index() {
-  return <div className="placeholder-notebook-detail" />
-}
+export default PlaceholderRoute
