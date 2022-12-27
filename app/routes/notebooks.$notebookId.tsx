@@ -131,6 +131,7 @@ export function NotebookView({
               key={note.id}
               to={`./${note.id}/view`}
               aria-selected={currentlySelectedNoteId === note.id}
+              prefetch="intent"
             >
               {note.name}
             </Link>
