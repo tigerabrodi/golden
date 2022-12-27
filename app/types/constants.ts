@@ -19,7 +19,7 @@ export const INTENT = 'intent'
 
 export const NOTEBOOKS = 'notebooks'
 
-export const ALL_NOTES = 'all-notes'
+export const ALL_NOTES_ROUTE = 'all-notes'
 
 export const EMAIL = 'email'
 

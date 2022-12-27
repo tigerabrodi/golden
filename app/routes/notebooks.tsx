@@ -16,7 +16,7 @@ import {
 } from '~/sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES,
+  ALL_NOTES_ROUTE,
   NOTEBOOKS,
   SET_COOKIE,
   VALIDATION_STATE_ERROR,
@@ -62,7 +62,7 @@ export default function Notebooks() {
     <main>
       <div className="notebooks">
         <Link
-          to={`/${NOTEBOOKS}/${ALL_NOTES}`}
+          to={`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`}
           className="all-notes-link"
           prefetch="intent"
         >
