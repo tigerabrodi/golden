@@ -1,9 +1,18 @@
-import type { loader as noteLoader } from './notebooks.$notebookId.$noteId'
+import type {
+  loader as noteLoader,
+  NoteOutletContext,
+} from './notebooks.$notebookId.$noteId'
 import type { DataFunctionArgs } from '@remix-run/node'
 import type { Status } from '~/types'
 
 import { json } from '@remix-run/node'
-import { Link, useLoaderData, useParams, useTransition } from '@remix-run/react'
+import {
+  Link,
+  useLoaderData,
+  useOutletContext,
+  useParams,
+  useTransition,
+} from '@remix-run/react'
 import { doc, updateDoc } from 'firebase/firestore'
 import debounce from 'lodash.debounce'
 import { useCallback, useEffect, useState } from 'react'
@@ -13,7 +22,6 @@ import { IS_NEWLY_CREATED } from './notebooks.$notebookId'
 
 import { NOTEBOOKS_COLLECTION, NOTES_COLLECTION } from '~/firebase'
 import { useLoaderRouteData } from '~/hooks'
-import { useGetNoteSubscription } from '~/hooks/useGetNoteSubscription'
 import { CloudCheck, Delete, Eye } from '~/icons'
 import { useFirebase } from '~/providers'
 
@@ -37,7 +45,11 @@ export default function Note() {
   const { notebookId } = useParams<{ notebookId: string }>()
 
   const [savingNameStatus, setSavingNameStatus] = useState<Status>('idle')
-  const savingLabel = savingNameStatus === 'loading' ? 'Saving' : 'Saved'
+  const [savingContentStatus, setSavingContentStatus] = useState<Status>('idle')
+
+  const isSaving =
+    savingNameStatus === 'loading' || savingContentStatus === 'loading'
+  const savingLabel = isSaving ? 'Saving' : 'Saved'
 
   if (!noteLoaderData || !notebookId) {
     throw new Error('Note/notebook not found')
@@ -45,10 +57,7 @@ export default function Note() {
 
   const { initialNote } = noteLoaderData
 
-  const { note, setNote } = useGetNoteSubscription({
-    initialNote,
-    notebookId,
-  })
+  const { note, setNote } = useOutletContext<NoteOutletContext>()
 
   // useCallback is required for debounce to work
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,11 +77,34 @@ export default function Note() {
     [firebaseContext]
   )
 
+  // useCallback is required for debounce to work
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleNoteContentChange = useCallback(
+    debounce(async (noteContent: string) => {
+      if (firebaseContext?.firebaseDb) {
+        setSavingContentStatus('loading')
+        const noteDoc = doc(
+          firebaseContext.firebaseDb,
+          // Using initial id here because note.id could be stale
+          `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${initialNote.id}`
+        )
+        await updateDoc(noteDoc, { content: noteContent })
+        setSavingContentStatus('success')
+      }
+    }, 500),
+    [firebaseContext]
+  )
+
   const isNavigatingToAnotherNote = transition.state === 'loading'
   const isSubscribedNoteStale = note.id !== initialNote.id
   const isNoteNameTheSame = initialNote.name === note.name
+  const isNoteContentTheSame = initialNote.content === note.content
+
   const shouldNotUpdateNoteName =
     isNavigatingToAnotherNote || isNoteNameTheSame || isSubscribedNoteStale
+
+  const shouldNotUpdateNoteContent =
+    isNavigatingToAnotherNote || isNoteContentTheSame || isSubscribedNoteStale
 
   useEffect(() => {
     if (shouldNotUpdateNoteName) {
@@ -84,6 +116,17 @@ export default function Note() {
       setSavingNameStatus('error')
     })
   }, [note.name, shouldNotUpdateNoteName, handleNoteNameChange])
+
+  useEffect(() => {
+    if (shouldNotUpdateNoteContent) {
+      return
+    }
+
+    handleNoteContentChange(note.content)?.catch((error) => {
+      console.error(error)
+      setSavingContentStatus('error')
+    })
+  }, [note.content, shouldNotUpdateNoteContent, handleNoteContentChange])
 
   return (
     <>
@@ -118,7 +161,17 @@ export default function Note() {
         </Link>
       </div>
 
-      <textarea name="content" aria-label="Markdown content" />
+      <textarea
+        name="content"
+        aria-label="Markdown content"
+        value={note.content}
+        onChange={(event) =>
+          setNote((prevNote) => ({
+            ...prevNote,
+            content: event.target.value,
+          }))
+        }
+      />
     </>
   )
 }
