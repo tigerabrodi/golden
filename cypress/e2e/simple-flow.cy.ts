@@ -14,7 +14,7 @@ beforeEach(() => {
   cy.clearCookies()
 })
 
-it('Should be able to create, edit, view and delete notes.', () => {
+it('Simple user flow of creating a note', () => {
   cy.visit('/')
 
   cy.findByRole('link', { name: 'Sign up' }).click()
