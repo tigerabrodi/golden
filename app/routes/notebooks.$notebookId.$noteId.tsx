@@ -1,13 +1,16 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
+import type { Dispatch, SetStateAction } from 'react'
+import type { Note } from '~/types'
 
 import { json, redirect } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
+import { Outlet, useLoaderData } from '@remix-run/react'
 import { z } from 'zod'
 import { zx } from 'zodix'
 
 import styles from './notebooks.$notebookId.$noteId.css'
 
 import { getNote, getServerFirebase } from '~/firebase'
+import { useGetNoteSubscription } from '~/hooks'
 import { authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
@@ -85,10 +88,24 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   }
 }
 
-export default function Note() {
+export type NoteOutletContext = {
+  note: Note
+  setNote: Dispatch<SetStateAction<Note>>
+}
+
+export default function NoteRoute() {
+  const { initialNote, notebookId } = useLoaderData<typeof loader>()
+
+  const { note, setNote } = useGetNoteSubscription({
+    initialNote,
+    notebookId,
+  })
+
+  const context: NoteOutletContext = { note, setNote }
+
   return (
     <div className="note">
-      <Outlet />
+      <Outlet context={context} />
     </div>
   )
 }
