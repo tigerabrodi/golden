@@ -36,7 +36,7 @@ import {
 } from './sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES,
+  ALL_NOTES_ROUTE,
   NOTEBOOKS,
   SET_COOKIE,
   VALIDATION_STATE_ERROR,
@@ -118,7 +118,7 @@ export const loader = async ({ request }: DataFunctionArgs) => {
         sessionHeaders
       )
     } else {
-      return redirect(`/${NOTEBOOKS}/${ALL_NOTES}`, sessionHeaders)
+      return redirect(`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`, sessionHeaders)
     }
   } catch (error) {
     const isNotOnAuthenticatedPages =

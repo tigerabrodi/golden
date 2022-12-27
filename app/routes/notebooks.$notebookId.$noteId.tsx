@@ -18,7 +18,7 @@ import {
 } from '~/sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES,
+  ALL_NOTES_ROUTE,
   NOTEBOOKS,
   NOT_LOGGED_IN_ERROR_MESSAGE,
   SET_COOKIE,
@@ -69,7 +69,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
         VALIDATION_STATE_ERROR,
         'You do not own this note.'
       )
-      return redirect(`/${NOTEBOOKS}/${ALL_NOTES}`, {
+      return redirect(`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`, {
         headers: {
           [SET_COOKIE]: await validationCommitSession(validationSession),
         },
