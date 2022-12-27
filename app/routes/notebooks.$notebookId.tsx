@@ -105,7 +105,7 @@ export function NotebookView({
   notes,
   currentlySelectedNoteId,
 }: {
-  currentlySelectedNoteId: string
+  currentlySelectedNoteId: string | undefined
   notebookName: string
   notes: Array<Note>
 }) {
@@ -155,10 +155,6 @@ export default function Notebook() {
     notebookId: notebook.id,
     initialNotes,
   })
-
-  if (!noteId) {
-    throw new Error('Note id is missing in params.')
-  }
 
   return (
     <>

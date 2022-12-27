@@ -60,10 +60,6 @@ export default function Notebook() {
     initialNotes,
   })
 
-  if (!noteId) {
-    throw new Error('Note id is missing in params.')
-  }
-
   return (
     <>
       <NotebookView
