@@ -1,12 +1,13 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 
 import { json, redirect } from '@remix-run/node'
-import { Form, Link, Outlet, useLoaderData } from '@remix-run/react'
+import { Outlet, useLoaderData, useParams } from '@remix-run/react'
 
+import { NotebookView } from './notebooks.$notebookId'
 import styles from './notebooks.$notebookId.css'
 
 import { getServerFirebase, getUserNotes } from '~/firebase'
-import { AddPen, Delete, PenWithPaper } from '~/icons'
+import { useGetAllUserNotesSubscription } from '~/hooks'
 import { authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
@@ -32,9 +33,9 @@ export const loader = async ({ request }: DataFunctionArgs) => {
   try {
     const { uid: ownerId } = await firebaseAdminAuth.verifySessionCookie(token)
 
-    const notes = await getUserNotes(ownerId)
+    const initialNotes = await getUserNotes(ownerId)
 
-    return json({ notes })
+    return json({ initialNotes, ownerId })
   } catch (error) {
     validationSession.flash(
       VALIDATION_STATE_ERROR,
@@ -50,35 +51,26 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 }
 
 export default function Notebook() {
-  const { notes } = useLoaderData<typeof loader>()
+  const { initialNotes, ownerId } = useLoaderData<typeof loader>()
+
+  const { noteId } = useParams<{ noteId: string }>()
+
+  const { notes } = useGetAllUserNotesSubscription({
+    ownerId,
+    initialNotes,
+  })
+
+  if (!noteId) {
+    throw new Error('Note id is missing in params.')
+  }
 
   return (
     <>
-      <div className="notes">
-        <div className="header">
-          <h1>All notes</h1>
-          <Form method="post">
-            <button type="submit">
-              <AddPen />
-            </button>
-          </Form>
-
-          <Link to="/" prefetch="intent">
-            <Delete />
-          </Link>
-        </div>
-
-        <div className="content">
-          {notes.length > 0 ? (
-            <div />
-          ) : (
-            <div>
-              <PenWithPaper />
-              <h2>No notes.</h2>
-            </div>
-          )}
-        </div>
-      </div>
+      <NotebookView
+        notebookName="All notes"
+        notes={notes}
+        currentlySelectedNoteId={noteId}
+      />
       <Outlet />
     </>
   )

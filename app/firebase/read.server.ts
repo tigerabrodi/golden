@@ -65,13 +65,13 @@ export async function getNotesInsideNotebookByNotebookId(
   return notes
 }
 
-export async function getUserNotes(ownerId: string): Promise<Array<Notebook>> {
+export async function getUserNotes(ownerId: string): Promise<Array<Note>> {
   const { firebaseDb } = getServerFirebase()
 
   const notesCollection = collectionGroup(
     firebaseDb,
     NOTES_COLLECTION
-  ) as CollectionReference<Notebook>
+  ) as CollectionReference<Note>
 
   const notesQuery = query(
     notesCollection,
@@ -80,9 +80,9 @@ export async function getUserNotes(ownerId: string): Promise<Array<Notebook>> {
   )
 
   const notesSnapshot = await getDocs(notesQuery)
-  const notebooks = notesSnapshot.docs.map((doc) => doc.data())
+  const notes = notesSnapshot.docs.map((doc) => doc.data())
 
-  return notebooks
+  return notes
 }
 
 export async function getNote({
