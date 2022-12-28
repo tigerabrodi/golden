@@ -1,5 +1,4 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
-import type { Note } from '~/types'
 
 import { json, redirect } from '@remix-run/node'
 import { Form, Link, Outlet, useLoaderData, useParams } from '@remix-run/react'
@@ -99,53 +98,6 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   }
 }
 
-export function NotebookView({
-  notebookName,
-  notes,
-  currentlySelectedNoteId,
-}: {
-  currentlySelectedNoteId: string | undefined
-  notebookName: string
-  notes: Array<Note>
-}) {
-  return (
-    <div className="notes">
-      <div className="header">
-        <h1>{notebookName}</h1>
-        <Form method="post">
-          <button type="submit" aria-label="Create new note">
-            <AddPen />
-          </button>
-        </Form>
-
-        <Link to="/" prefetch="intent">
-          <Delete />
-        </Link>
-      </div>
-
-      <div className="content">
-        {notes.length > 0 ? (
-          notes.map((note) => (
-            <Link
-              key={note.id}
-              to={`./${note.id}/view`}
-              aria-selected={currentlySelectedNoteId === note.id}
-              prefetch="intent"
-            >
-              {note.name}
-            </Link>
-          ))
-        ) : (
-          <div>
-            <PenWithPaper />
-            <h2>No notes.</h2>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
 export default function Notebook() {
   const { notebook, initialNotes } = useLoaderData<typeof loader>()
 
@@ -158,11 +110,41 @@ export default function Notebook() {
 
   return (
     <>
-      <NotebookView
-        notebookName={notebook.name}
-        notes={notes}
-        currentlySelectedNoteId={noteId}
-      />
+      <div className="notes">
+        <div className="header">
+          <h1>{notebook.name}</h1>
+          <Form method="post">
+            <button type="submit" aria-label="Create new note">
+              <AddPen />
+            </button>
+          </Form>
+
+          <Link to="/" prefetch="intent">
+            <Delete />
+          </Link>
+        </div>
+
+        <div className="content">
+          {notes.length > 0 ? (
+            notes.map((note) => (
+              <Link
+                key={note.id}
+                to={`./${note.id}/view`}
+                aria-selected={noteId === note.id}
+                prefetch="intent"
+              >
+                {note.name}
+              </Link>
+            ))
+          ) : (
+            <div>
+              <PenWithPaper />
+              <h2>No notes.</h2>
+            </div>
+          )}
+        </div>
+      </div>
+
       <Outlet />
     </>
   )
