@@ -145,7 +145,12 @@ export default function Note() {
             }))
           }
         />
-        <Link to="../view" className="edit-view" prefetch="intent">
+        <Link
+          to="../view"
+          className="edit-view"
+          prefetch="intent"
+          aria-label="View Note"
+        >
           <span>View</span>
           <Eye className="eye" />
         </Link>
@@ -155,7 +160,12 @@ export default function Note() {
           <span>{savingLabel}</span>
         </div>
 
-        <Link to="../delete" className="delete" prefetch="intent">
+        <Link
+          to="../delete"
+          className="delete"
+          prefetch="intent"
+          aria-label="Delete Note"
+        >
           <span>Delete</span>
           <Delete />
         </Link>

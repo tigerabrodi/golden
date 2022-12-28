@@ -27,6 +27,7 @@ export default function Note() {
           to={`/${NOTEBOOKS}/${noteLoaderData.notebookId}/${note.id}/edit`}
           className="edit-view"
           prefetch="intent"
+          aria-label="Edit note"
         >
           <span>Edit</span>
           <EditPen className="pen" />
@@ -36,6 +37,7 @@ export default function Note() {
           to={`/${NOTEBOOKS}/${noteLoaderData.notebookId}/${note.id}/view/delete`}
           className="delete"
           prefetch="intent"
+          aria-label="Delete note"
         >
           <span>Delete</span>
           <Delete />
