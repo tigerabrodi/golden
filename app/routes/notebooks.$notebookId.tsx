@@ -23,7 +23,6 @@ import {
 } from '~/sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES_ROUTE,
   NOTEBOOKS,
   NOT_LOGGED_IN_ERROR_MESSAGE,
   SET_COOKIE,
@@ -66,7 +65,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
         'This notebook does not exist.'
       )
 
-      return redirect(`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`, {
+      return redirect(`/${NOTEBOOKS}`, {
         headers: {
           [SET_COOKIE]: await validationCommitSession(validationSession),
         },
@@ -81,7 +80,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
         'You do not own this notebook.'
       )
 
-      return redirect(`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`, {
+      return redirect(`/${NOTEBOOKS}`, {
         headers: {
           [SET_COOKIE]: await validationCommitSession(validationSession),
         },

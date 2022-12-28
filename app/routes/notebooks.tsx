@@ -8,7 +8,7 @@ import styles from './notebooks.css'
 
 import { getServerFirebase } from '~/firebase'
 import { getUserNotebooks } from '~/firebase/read.server'
-import { Book, Paper, Plus } from '~/icons'
+import { Book, Plus } from '~/icons'
 import { authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
@@ -16,7 +16,6 @@ import {
 } from '~/sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES_ROUTE,
   NOTEBOOKS,
   SET_COOKIE,
   VALIDATION_STATE_ERROR,
@@ -61,35 +60,24 @@ export default function Notebooks() {
   return (
     <main>
       <div className="notebooks">
-        <Link
-          to={`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`}
-          className="all-notes-link"
-          prefetch="intent"
-        >
-          <Paper />
-          <span>All notes</span>
-        </Link>
-
-        <div className="notebooks-list">
-          <div>
-            <Book />
-            <p>Notebooks</p>
-            <Link to={`/${NOTEBOOKS}/add`} prefetch="intent">
-              <Plus />
-            </Link>
-          </div>
-          {notebooks.length > 0 && (
-            <ul>
-              {notebooks.map(({ id, name }) => (
-                <li key={id}>
-                  <Link to={`/${NOTEBOOKS}/${id}`} prefetch="intent">
-                    {name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+        <div>
+          <Book />
+          <p>Notebooks</p>
+          <Link to={`/${NOTEBOOKS}/add`} prefetch="intent">
+            <Plus />
+          </Link>
         </div>
+        {notebooks.length > 0 && (
+          <ul>
+            {notebooks.map(({ id, name }) => (
+              <li key={id}>
+                <Link to={`/${NOTEBOOKS}/${id}`} prefetch="intent">
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <Outlet />
     </main>

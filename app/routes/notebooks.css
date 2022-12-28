@@ -17,59 +17,41 @@ main .notebooks {
   width: 15%;
   max-width: 200px;
 }
-main .notebooks .all-notes-link {
+main .notebooks div {
   display: flex;
   align-items: center;
   column-gap: 5px;
   width: 100%;
 }
-main .notebooks .all-notes-link svg {
-  width: 14px;
-}
-main .notebooks .all-notes-link span {
-  color: var(--colors-white);
-  font-weight: 400;
-  font-size: 0.875rem;
-}
-main .notebooks .notebooks-list {
-  margin-top: 20px;
-  width: 100%;
-}
-main .notebooks .notebooks-list div {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-  width: 100%;
-}
-main .notebooks .notebooks-list div svg {
+main .notebooks div svg {
   width: 15px;
   height: 15px;
 }
-main .notebooks .notebooks-list div p {
+main .notebooks div p {
   font-weight: 400;
   font-size: 0.875rem;
   color: var(--colors-white);
   opacity: 45%;
 }
-main .notebooks .notebooks-list div a {
+main .notebooks div a {
   margin-left: auto;
 }
-main .notebooks .notebooks-list div a svg {
+main .notebooks div a svg {
   width: 13px;
   height: 13px;
 }
-main .notebooks .notebooks-list ul {
+main .notebooks ul {
   display: flex;
   flex-direction: column;
   width: calc(100% + 20px);
   margin: 10px -10px 0px -10px;
 }
-main .notebooks .notebooks-list ul li {
+main .notebooks ul li {
   width: 100%;
   list-style: none;
   padding-left: 30px;
 }
-main .notebooks .notebooks-list ul li a {
+main .notebooks ul li a {
   color: var(--colors-white);
   font-weight: 400;
   font-size: 0.875rem;
@@ -77,7 +59,7 @@ main .notebooks .notebooks-list ul li a {
   padding: 7px 0;
   display: block;
 }
-main .notebooks .notebooks-list ul li:hover {
+main .notebooks ul li:hover {
   background-color: var(--colors-navy-700);
 }
 

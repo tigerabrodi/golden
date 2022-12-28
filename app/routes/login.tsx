@@ -16,7 +16,6 @@ import {
 } from '~/sessions/validationStates.server'
 import {
   ACCESS_TOKEN,
-  ALL_NOTES_ROUTE,
   EMAIL,
   FIVE_DAYS_IN_MILLISECONDS,
   NOTEBOOKS,
@@ -107,7 +106,7 @@ export const action = async ({ request }: DataFunctionArgs) => {
       ]
     )
 
-    return redirect(`/${NOTEBOOKS}/${ALL_NOTES_ROUTE}`, {
+    return redirect(`/${NOTEBOOKS}`, {
       headers: [
         [SET_COOKIE, authCommittedSession],
         [SET_COOKIE, validationCommitedSession],
