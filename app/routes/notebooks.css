@@ -59,6 +59,9 @@ main .notebooks ul li a {
   padding: 7px 0;
   display: block;
 }
+main .notebooks ul li[data-selected=true] {
+  background-color: var(--colors-navy-700);
+}
 main .notebooks ul li:hover {
   background-color: var(--colors-navy-700);
 }

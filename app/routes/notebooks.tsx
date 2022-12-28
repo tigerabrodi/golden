@@ -2,7 +2,7 @@ import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { Link, Outlet, useLoaderData } from '@remix-run/react'
+import { Link, Outlet, useLoaderData, useParams } from '@remix-run/react'
 
 import styles from './notebooks.css'
 
@@ -57,6 +57,8 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 export default function Notebooks() {
   const { notebooks } = useLoaderData<typeof loader>()
 
+  const { notebookId } = useParams<{ notebookId: string }>()
+
   return (
     <main>
       <div className="notebooks">
@@ -70,7 +72,7 @@ export default function Notebooks() {
         {notebooks.length > 0 && (
           <ul>
             {notebooks.map(({ id, name }) => (
-              <li key={id}>
+              <li key={id} data-selected={notebookId === id}>
                 <Link to={`/${NOTEBOOKS}/${id}`} prefetch="intent">
                   {name}
                 </Link>
