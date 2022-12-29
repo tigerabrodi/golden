@@ -1,6 +1,6 @@
 import type { Note, Notebook, Timestamp } from '~/types/firebase'
 
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { deleteDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { v4 } from 'uuid'
 
 import { NOTEBOOKS_COLLECTION, NOTES_COLLECTION, UNTITLED } from './constants'
@@ -53,4 +53,21 @@ export async function createNewNoteWithUserId({
   await setDoc(noteDoc, newNote)
 
   return newNote.id
+}
+
+export async function deleteNote({
+  noteId,
+  notebookId,
+}: {
+  noteId: string
+  notebookId: string
+}) {
+  const { firebaseDb } = getServerFirebase()
+
+  const noteDoc = doc(
+    firebaseDb,
+    `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${noteId}`
+  )
+
+  await deleteDoc(noteDoc)
 }

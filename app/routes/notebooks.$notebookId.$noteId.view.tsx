@@ -3,7 +3,7 @@ import type {
   NoteOutletContext,
 } from './notebooks.$notebookId.$noteId'
 
-import { Link, useOutletContext } from '@remix-run/react'
+import { Link, Outlet, useOutletContext } from '@remix-run/react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -68,6 +68,8 @@ export default function Note() {
           }}
         />
       </div>
+
+      <Outlet />
     </>
   ) : null
 }
