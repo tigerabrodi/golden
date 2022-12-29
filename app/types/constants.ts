@@ -23,5 +23,7 @@ export const EMAIL = 'email'
 
 export const PASSWORD = 'password'
 
+export const BACK_ROUTE = '..'
+
 export const NOT_LOGGED_IN_ERROR_MESSAGE =
   'You need to be logged in to access this page.'
