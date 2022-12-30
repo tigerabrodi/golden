@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 
-type TestUser = {
+export type TestUser = {
   email: string
   password: string
 }

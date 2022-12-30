@@ -3,7 +3,7 @@ import type { FirebaseError } from 'firebase/app'
 
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
@@ -35,6 +35,12 @@ export const links: LinksFunction = () => {
 }
 
 export default function SignUp() {
+  const transition = useTransition()
+
+  const isSubmitting = transition.state === 'submitting'
+
+  const buttonText = isSubmitting ? 'Signing up...' : 'Sign up'
+
   return (
     <main className="auth">
       <h1>Sign up</h1>
@@ -73,7 +79,9 @@ export default function SignUp() {
           />
         </div>
 
-        <button type="submit">Sign up</button>
+        <button type="submit" disabled={isSubmitting}>
+          {buttonText}
+        </button>
       </Form>
     </main>
   )
