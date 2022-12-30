@@ -8,6 +8,7 @@ import type { Status } from '~/types'
 import { json } from '@remix-run/node'
 import {
   Link,
+  Outlet,
   useLoaderData,
   useOutletContext,
   useParams,
@@ -149,7 +150,7 @@ export default function Note() {
           to="../view"
           className="edit-view"
           prefetch="intent"
-          aria-label="View Note"
+          aria-label="View note"
         >
           <span>View</span>
           <Eye className="eye" />
@@ -161,10 +162,10 @@ export default function Note() {
         </div>
 
         <Link
-          to="../delete"
+          to="./delete"
           className="delete"
           prefetch="intent"
-          aria-label="Delete Note"
+          aria-label="Delete note"
         >
           <span>Delete</span>
           <Delete />
@@ -182,6 +183,8 @@ export default function Note() {
           }))
         }
       />
+
+      <Outlet />
     </>
   )
 }
