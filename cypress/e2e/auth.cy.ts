@@ -1,5 +1,4 @@
-import { createNewUser } from '../support/factory'
-import { TestUser } from '../support/types'
+import { createNewUser, TestUser } from '../support/factory'
 
 const SIGNED_IN_SUCCESS_MESSAGE = 'Successfully logged in!'
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
@@ -85,6 +84,7 @@ it('Should be able to sign up', () => {
   cy.findByLabelText('Confirm password').type(newUser.password)
 
   cy.findByRole('button', { name: 'Sign up' }).click()
+  cy.findByRole('button', { name: 'Signing up...' }).should('be.disabled')
 
   // Toast Message
   cy.findByRole('status').within(() => {
@@ -112,6 +112,8 @@ it('Should be able to login.', () => {
   cy.findByLabelText('Password').type(existingUser.password)
 
   cy.findByRole('button', { name: 'Login' }).click()
+
+  cy.findByRole('button', { name: 'Logging in...' }).should('be.disabled')
 
   // Toast Message
   cy.findByRole('status')
