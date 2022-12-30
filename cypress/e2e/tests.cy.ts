@@ -7,15 +7,16 @@ const NOTE_NAME_LABEL = 'Note name'
 const SAVING = 'Saving'
 const SAVED = 'Saved'
 const CREATE_NEW_NOTE_NAME = 'Create new note'
-
-const newUser = createNewUser()
-const newNote = createNewNote()
+const VIEW_NOTE_NAME = 'View note'
 
 beforeEach(() => {
   cy.clearCookies()
 })
 
 it('Simple user flow of creating a note', () => {
+  const newUser = createNewUser()
+  const newNote = createNewNote()
+
   cy.visit('/')
 
   cy.findByRole('link', { name: 'Sign up' }).click()
@@ -51,7 +52,7 @@ it('Simple user flow of creating a note', () => {
   cy.findByLabelText(NOTE_NAME_LABEL).should('have.value', UNTITLED)
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.focused')
 
-  cy.findByRole('link', { name: 'View note' }).should('be.visible')
+  cy.findByRole('link', { name: VIEW_NOTE_NAME }).should('be.visible')
   cy.findByRole('link', { name: 'Delete note' }).should('be.visible')
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
@@ -67,11 +68,13 @@ it('Simple user flow of creating a note', () => {
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
   // View note
-  cy.findByRole('link', { name: 'View' }).click()
+  cy.findByRole('link', { name: VIEW_NOTE_NAME }).click()
   cy.findByText(newNote.content).should('be.visible')
 })
 
 it('Delete note', () => {
+  const newUser = createNewUser()
+
   cy.visit('/')
 
   cy.findByRole('link', { name: 'Sign up' }).click()
@@ -92,19 +95,49 @@ it('Delete note', () => {
   cy.findByRole('heading', { name: GENERAL_NOTES }).should('be.visible')
   cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
 
-  cy.findByRole('link', { name: UNTITLED }).click()
+  cy.findByRole('link', { name: VIEW_NOTE_NAME }).click()
+  cy.location('pathname').should('include', '/view')
   cy.findByRole('heading', { name: UNTITLED }).should('be.visible')
+
+  // Delete note from view
   cy.findByRole('link', { name: 'Delete note' }).click()
 
   cy.findByRole('dialog', {
-    name: 'Are you sure you want to delete your notebook?',
+    name: 'Are you sure you want to delete your note?',
   }).within(() => {
     cy.findByRole('heading', {
-      name: 'Are you sure you want to delete your notebook?',
+      name: 'Are you sure you want to delete your note?',
     }).should('be.visible')
 
     cy.findByRole('button', { name: 'Delete' }).click()
   })
+
+  cy.findByRole('status').within(() => {
+    cy.findByText('Successfully deleted note!').should('be.visible')
+    cy.findByRole('button', { name: 'Close' }).click()
+  })
+
+  // Create new note and delete inside edit page
+  cy.findByRole('link', { name: UNTITLED }).should('not.exist')
+  cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
+  cy.findByRole('link', { name: UNTITLED }).should('be.visible').click()
+  cy.findByRole('link', { name: 'Edit note' }).click()
+
+  cy.findByLabelText(NOTE_NAME_LABEL).should('be.visible')
+
+  cy.findByRole('link', { name: 'Delete note' }).should('be.visible').click()
+
+  cy.findByRole('dialog', {
+    name: 'Are you sure you want to delete your note?',
+  }).within(() => {
+    cy.findByRole('heading', {
+      name: 'Are you sure you want to delete your note?',
+    }).should('be.visible')
+
+    cy.findByRole('button', { name: 'Delete' }).click()
+  })
+
+  cy.findByRole('dialog').should('not.exist')
 
   cy.findByRole('status').within(() => {
     cy.findByText('Successfully deleted note!').should('be.visible')
