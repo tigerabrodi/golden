@@ -72,7 +72,7 @@ it('Simple user flow of creating a note', () => {
   cy.findByText(newNote.content).should('be.visible')
 })
 
-it('Delete note', () => {
+it('Should be able to delete note in both view and edit', () => {
   const newUser = createNewUser()
 
   cy.visit('/')
