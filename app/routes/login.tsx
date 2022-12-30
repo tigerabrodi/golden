@@ -1,7 +1,7 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 
 import { json, redirect } from '@remix-run/node'
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
@@ -31,6 +31,12 @@ export const links: LinksFunction = () => {
 }
 
 export default function Login() {
+  const transition = useTransition()
+
+  const isSubmitting = transition.state === 'submitting'
+
+  const buttonText = isSubmitting ? 'Logging in...' : 'Login'
+
   return (
     <main className="auth">
       <h1>Login</h1>
@@ -58,7 +64,9 @@ export default function Login() {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isSubmitting}>
+          {buttonText}
+        </button>
       </Form>
     </main>
   )
