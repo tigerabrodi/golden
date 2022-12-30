@@ -27,7 +27,7 @@ export const links: LinksFunction = () => {
 
 export default function DeleteNote() {
   return (
-    <ConfirmationDialog title="Are you sure you want to delete your notebook?" />
+    <ConfirmationDialog title="Are you sure you want to delete your note?" />
   )
 }
 
