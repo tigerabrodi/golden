@@ -1,0 +1,44 @@
+.dialog .panel {
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 30px 50px;
+}
+.dialog .panel h1 {
+  font-weight: 500;
+  font-size: 1.875rem;
+  color: var(--colors-white);
+}
+.dialog .panel form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 15px;
+  margin-top: auto;
+  height: 70%;
+}
+.dialog .panel form label {
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--colors-white);
+}
+.dialog .panel form input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 0;
+  color: var(--colors-white);
+  font-weight: 400;
+  font-size: 1.125rem;
+  border-radius: var(--border-radius-medium);
+  border: 1px solid var(--colors-navy-200);
+  background-color: var(--colors-navy-700);
+}
+.dialog .panel form div {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 60px;
+}
+
+/*# sourceMappingURL=notebooks.add.css.map */

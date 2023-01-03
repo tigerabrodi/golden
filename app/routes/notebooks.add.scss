@@ -1,0 +1,50 @@
+.dialog {
+  .panel {
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding: 30px 50px;
+
+    h1 {
+      font-weight: 500;
+      font-size: calc(1rem * 30 / 16);
+      color: var(--colors-white);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      row-gap: 15px;
+      margin-top: auto;
+      height: 70%;
+
+      label {
+        font-weight: 500;
+        font-size: calc(1rem * 20 / 16);
+        color: var(--colors-white);
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        padding-right: 0;
+        color: var(--colors-white);
+        font-weight: 400;
+        font-size: calc(1rem * 18 / 16);
+        border-radius: var(--border-radius-medium);
+        border: 1px solid var(--colors-navy-200);
+        background-color: var(--colors-navy-700);
+      }
+
+      div {
+        margin-top: auto;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        column-gap: 60px;
+      }
+    }
+  }
+}
