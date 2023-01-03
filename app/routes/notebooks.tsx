@@ -65,7 +65,11 @@ export default function Notebooks() {
         <div>
           <Book />
           <p>Notebooks</p>
-          <Link to={`/${NOTEBOOKS}/add`} prefetch="intent">
+          <Link
+            to={`/${NOTEBOOKS}/add`}
+            prefetch="intent"
+            aria-label="Create new notebook"
+          >
             <Plus />
           </Link>
         </div>
