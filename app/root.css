@@ -36,6 +36,8 @@ body {
   align-items: center;
   background-color: var(--colors-navy-700);
   padding: 0 93px;
+  max-width: 2000px;
+  margin: 0 auto;
 }
 
 /* Custom Resets */
