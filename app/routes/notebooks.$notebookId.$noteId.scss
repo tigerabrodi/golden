@@ -17,7 +17,8 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      width: 200px;
+      width: 220px;
+      margin-right: 40px;
     }
 
     input {
@@ -25,7 +26,8 @@
       font-weight: 400;
       color: var(--colors-white);
       background-color: transparent;
-      width: 200px;
+      width: 220px;
+      margin-right: 40px;
     }
 
     .edit-view {

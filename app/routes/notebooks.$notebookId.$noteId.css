@@ -17,14 +17,16 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 200px;
+  width: 220px;
+  margin-right: 40px;
 }
 .note .header input {
   font-size: 1.25rem;
   font-weight: 400;
   color: var(--colors-white);
   background-color: transparent;
-  width: 200px;
+  width: 220px;
+  margin-right: 40px;
 }
 .note .header .edit-view {
   display: flex;
