@@ -1,4 +1,8 @@
-import { createNewNote, createNewUser } from '../support/factory'
+import {
+  createNewNote,
+  createNewUser,
+  createNewNotebook,
+} from '../support/factory'
 
 const SIGNED_UP_SUCCESS_MESSAGE = 'Successfully signed up!'
 const GENERAL_NOTES = 'General notes'
@@ -8,6 +12,8 @@ const SAVING = 'Saving'
 const SAVED = 'Saved'
 const CREATE_NEW_NOTE_NAME = 'Create new note'
 const VIEW_NOTE_NAME = 'View note'
+const EDIT_NOTE_NAME = 'Edit note'
+const NO_NOTES_NAME = 'No notes.'
 
 beforeEach(() => {
   cy.clearCookies()
@@ -38,7 +44,9 @@ it('Simple user flow of creating a note', () => {
   cy.findByRole('heading', { name: GENERAL_NOTES, level: 1 }).should(
     'be.visible'
   )
-  cy.findByRole('heading', { name: 'No notes.', level: 2 }).should('be.visible')
+  cy.findByRole('heading', { name: NO_NOTES_NAME, level: 2 }).should(
+    'be.visible'
+  )
   cy.findByRole('list')
     .findByRole('listitem')
     .findByRole('link', { name: GENERAL_NOTES })
@@ -121,7 +129,7 @@ it('Should be able to delete note in both view and edit', () => {
   cy.findByRole('link', { name: UNTITLED }).should('not.exist')
   cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
   cy.findByRole('link', { name: UNTITLED }).should('be.visible').click()
-  cy.findByRole('link', { name: 'Edit note' }).click()
+  cy.findByRole('link', { name: EDIT_NOTE_NAME }).click()
 
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.visible')
 
@@ -143,4 +151,67 @@ it('Should be able to delete note in both view and edit', () => {
     cy.findByText('Successfully deleted note!').should('be.visible')
     cy.findByRole('button', { name: 'Close' }).click()
   })
+})
+
+it('Should be able to create new notebook, note and delete note & notebook', () => {
+  const user = createNewUser()
+  const note = createNewNote()
+  const notebook = createNewNotebook()
+
+  cy.visit('/')
+
+  cy.findByRole('link', { name: 'Sign up' }).click()
+
+  // Sign up
+  cy.findByLabelText('Email').type(user.email)
+  cy.findByLabelText('Password').type(user.password)
+  cy.findByLabelText('Confirm password').type(user.password)
+
+  cy.findByRole('button', { name: 'Sign up' }).click()
+
+  // Toast Message
+  cy.findByRole('status').within(() => {
+    cy.findByRole('button', { name: 'Close' }).click()
+  })
+
+  //  create notebook
+  cy.findByRole('link', { name: 'Create new notebook' }).click()
+  cy.findByRole('dialog', { name: 'Add a new notebook' }).within(() => {
+    cy.findByLabelText('Enter notebook name').type(notebook.name)
+    cy.findByRole('button', { name: 'Create' }).click()
+  })
+
+  cy.findByRole('dialog').should('not.exist')
+
+  // Toast Message
+  cy.findByRole('status').within(() => {
+    cy.findByText('Successfully created notebook!').should('be.visible')
+    cy.findByRole('button', { name: 'Close' }).click()
+  })
+
+  cy.findByRole('heading', { name: notebook.name }).should('be.visible')
+  cy.findByRole('heading', { name: NO_NOTES_NAME }).should('be.visible')
+
+  // create new note
+  cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
+  cy.findByLabelText(NOTE_NAME_LABEL).clear()
+  cy.findByRole('status', { name: SAVING }).should('be.visible')
+  cy.findByRole('status', { name: SAVED }).should('be.visible')
+
+  cy.findByLabelText(NOTE_NAME_LABEL).type(note.name)
+
+  cy.findByRole('status', { name: SAVING }).should('be.visible')
+  cy.findByRole('status', { name: SAVED }).should('be.visible')
+  cy.findByRole('link', { name: note.name }).should('be.visible')
+
+  // View note
+  cy.findByRole('link', { name: VIEW_NOTE_NAME }).click()
+  cy.findByRole('heading', { name: note.name }).should('be.visible')
+
+  // Edit note
+  cy.findByRole('link', { name: EDIT_NOTE_NAME }).click()
+  cy.findByLabelText(NOTE_NAME_LABEL).should('be.visible')
+  cy.findByLabelText('Markdown content').type(note.content)
+  cy.findByRole('status', { name: SAVING }).should('be.visible')
+  cy.findByRole('status', { name: SAVED }).should('be.visible')
 })
