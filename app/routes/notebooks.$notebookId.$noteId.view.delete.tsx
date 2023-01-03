@@ -5,7 +5,8 @@ import { z } from 'zod'
 import { zx } from 'zodix'
 
 import { ConfirmationDialog } from '~/components'
-import styles from '~/components/ConfirmationDialog.css'
+import ConfirmationDialogStyles from '~/components/ConfirmationDialog.css'
+import DialogStyles from '~/components/Dialog.css'
 import { deleteNote, getNote, getServerFirebase } from '~/firebase'
 import { authGetSession } from '~/sessions/auth.server'
 import {
@@ -22,7 +23,10 @@ import {
 import { getCookie } from '~/utils/getCookie'
 
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }]
+  return [
+    { rel: 'stylesheet', href: DialogStyles },
+    { rel: 'stylesheet', href: ConfirmationDialogStyles },
+  ]
 }
 
 export default function DeleteNote() {
@@ -85,7 +89,7 @@ export const action = async ({ params, request }: DataFunctionArgs) => {
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
-    return redirect(`/${NOTEBOOKS}/${notebookId}`, {
+    return redirect('/', {
       headers: {
         [SET_COOKIE]: await validationCommitSession(validationSession),
       },
