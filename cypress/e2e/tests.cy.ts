@@ -189,6 +189,9 @@ it('Should be able to create new notebook, note and delete note & notebook', () 
     cy.findByRole('button', { name: 'Close' }).click()
   })
 
+  // Notebook link should be visible
+  cy.findByRole('link', { name: notebook.name }).should('be.visible')
+
   cy.findByRole('heading', { name: notebook.name }).should('be.visible')
   cy.findByRole('heading', { name: NO_NOTES_NAME }).should('be.visible')
 
@@ -214,4 +217,26 @@ it('Should be able to create new notebook, note and delete note & notebook', () 
   cy.findByLabelText('Markdown content').type(note.content)
   cy.findByRole('status', { name: SAVING }).should('be.visible')
   cy.findByRole('status', { name: SAVED }).should('be.visible')
+
+  // Delete notebook
+  cy.findByRole('link', { name: 'Delete notebook' }).click()
+  cy.findByRole('dialog', {
+    name: 'Are you sure you want to delete your notebook?',
+  }).within(() => {
+    cy.findByRole('heading', {
+      name: 'Are you sure you want to delete your notebook?',
+    }).should('be.visible')
+
+    cy.findByRole('button', { name: 'Delete' }).click()
+  })
+
+  cy.findByRole('dialog').should('not.exist')
+
+  cy.findByRole('status').within(() => {
+    cy.findByText('Successfully deleted notebook!').should('be.visible')
+    cy.findByRole('button', { name: 'Close' }).click()
+  })
+
+  // Notebook link should not exist
+  cy.findByRole('link', { name: notebook.name }).should('not.exist')
 })
