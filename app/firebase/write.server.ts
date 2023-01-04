@@ -97,3 +97,11 @@ export async function deleteNote({
 
   await deleteDoc(noteDoc)
 }
+
+export async function deleteNotebook(notebookId: string) {
+  const { firebaseDb } = getServerFirebase()
+
+  const notebookDoc = doc(firebaseDb, `/${NOTEBOOKS_COLLECTION}/${notebookId}`)
+
+  await deleteDoc(notebookDoc)
+}

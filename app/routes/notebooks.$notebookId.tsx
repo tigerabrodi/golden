@@ -119,7 +119,11 @@ export default function Notebook() {
             </button>
           </Form>
 
-          <Link to="/" prefetch="intent">
+          <Link
+            to={`/notebooks/${notebook.id}/delete`}
+            prefetch="intent"
+            aria-label="Delete notebook"
+          >
             <Delete />
           </Link>
         </div>
