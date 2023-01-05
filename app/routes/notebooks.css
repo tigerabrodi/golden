@@ -58,6 +58,10 @@ main .notebooks ul li a {
   width: 100%;
   padding: 7px 0;
   display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 12ch;
 }
 main .notebooks ul li[data-selected=true] {
   background-color: var(--colors-navy-700);
