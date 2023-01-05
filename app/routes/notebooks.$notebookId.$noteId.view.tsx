@@ -44,7 +44,7 @@ export default function Note() {
         </Link>
       </div>
 
-      <div className="markdown">
+      <div className="markdown scroll-bar">
         <ReactMarkdown
           children={note.content}
           components={{

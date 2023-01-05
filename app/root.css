@@ -107,3 +107,21 @@ img {
 .spinner {
   animation: spinning 0.3s linear infinite;
 }
+
+.scroll-bar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--colors-navy-200);
+}
+
+.scroll-bar::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+  background-color: var(--colors-navy-700);
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  border: 5px solid var(--colors-navy-200);
+}

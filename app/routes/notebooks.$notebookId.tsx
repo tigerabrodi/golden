@@ -110,7 +110,7 @@ export default function Notebook() {
 
   return (
     <>
-      <div className="notes">
+      <div className="notes scroll-bar">
         <div className="header">
           <h1>{notebook.name}</h1>
           <Form method="post">
