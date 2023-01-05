@@ -3,7 +3,12 @@ import type { Note, Notebook, Timestamp } from '~/types/firebase'
 import { deleteDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { v4 } from 'uuid'
 
-import { NOTEBOOKS_COLLECTION, NOTES_COLLECTION, UNTITLED } from './constants'
+import {
+  CREATED_AT,
+  NOTEBOOKS_COLLECTION,
+  NOTES_COLLECTION,
+  UNTITLED,
+} from './constants'
 import { getServerFirebase } from './firebase.server'
 
 const GENERAL_NOTES = 'General notes'
@@ -21,7 +26,7 @@ export async function createNotebook({
     id: v4(),
     name,
     ownerId,
-    createdAt: serverTimestamp() as unknown as Timestamp,
+    [CREATED_AT]: serverTimestamp() as unknown as Timestamp,
   }
 
   const notebookDoc = doc(
@@ -41,7 +46,7 @@ export async function createFirstGeneralNotebook(ownerId: string) {
     id: v4(),
     name: GENERAL_NOTES,
     ownerId,
-    createdAt: serverTimestamp() as unknown as Timestamp,
+    [CREATED_AT]: serverTimestamp() as unknown as Timestamp,
   }
 
   const notebookDoc = doc(
@@ -68,7 +73,7 @@ export async function createNewNoteWithUserId({
     name: UNTITLED,
     ownerId,
     content: '',
-    createdAt: serverTimestamp() as unknown as Timestamp,
+    [CREATED_AT]: serverTimestamp() as unknown as Timestamp,
   }
 
   const noteDoc = doc(
