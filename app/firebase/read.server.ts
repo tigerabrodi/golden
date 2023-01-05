@@ -1,7 +1,7 @@
 import type { CollectionReference, DocumentReference } from 'firebase/firestore'
 import type { Note, Notebook } from '~/types/firebase'
 
-import { collectionGroup, orderBy } from 'firebase/firestore'
+import { orderBy } from 'firebase/firestore'
 import { doc, getDoc } from 'firebase/firestore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 
@@ -24,7 +24,8 @@ export async function getUserNotebooks(
   ) as CollectionReference<Notebook>
   const notebooksQuery = query(
     notebooksCollection,
-    where(OWNER_ID, '==', ownerId)
+    where(OWNER_ID, '==', ownerId),
+    orderBy(CREATED_AT, 'asc')
   )
 
   const notebooksSnapshot = await getDocs(notebooksQuery)
@@ -54,30 +55,12 @@ export async function getNotesInsideNotebookByNotebookId(
 ): Promise<Array<Note>> {
   const { firebaseDb } = getServerFirebase()
 
-  const notesCollection = collection(
+  const notesCollectionRef = collection(
     firebaseDb,
     `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}`
   ) as CollectionReference<Note>
 
-  const notesSnapshot = await getDocs(notesCollection)
-  const notes = notesSnapshot.docs.map((doc) => doc.data())
-
-  return notes
-}
-
-export async function getUserNotes(ownerId: string): Promise<Array<Note>> {
-  const { firebaseDb } = getServerFirebase()
-
-  const notesCollection = collectionGroup(
-    firebaseDb,
-    NOTES_COLLECTION
-  ) as CollectionReference<Note>
-
-  const notesQuery = query(
-    notesCollection,
-    where(OWNER_ID, '==', ownerId),
-    orderBy(CREATED_AT, 'asc')
-  )
+  const notesQuery = query(notesCollectionRef, orderBy(CREATED_AT, 'asc'))
 
   const notesSnapshot = await getDocs(notesQuery)
   const notes = notesSnapshot.docs.map((doc) => doc.data())
