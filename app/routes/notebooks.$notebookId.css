@@ -3,6 +3,7 @@
   height: 100%;
   width: 25%;
   max-width: 400px;
+  overflow-y: auto;
 }
 .notes .header {
   display: flex;
@@ -15,6 +16,10 @@
   font-weight: 500;
   font-size: 1.25rem;
   color: var(--colors-white);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 12ch;
 }
 .notes .header form {
   margin-left: auto;

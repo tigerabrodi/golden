@@ -3,6 +3,7 @@
   height: 100%;
   width: 25%;
   max-width: 400px;
+  overflow-y: auto;
 
   .header {
     display: flex;
@@ -15,6 +16,10 @@
       font-weight: 500;
       font-size: calc(1rem * 20 / 16);
       color: var(--colors-white);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 12ch;
     }
 
     form {
