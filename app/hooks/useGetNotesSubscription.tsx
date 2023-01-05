@@ -1,11 +1,12 @@
 import type { CollectionReference } from 'firebase/firestore'
 import type { Note } from '~/types'
 
+import { orderBy, query } from 'firebase/firestore'
 import { collection } from 'firebase/firestore'
 import { onSnapshot } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
-import { NOTEBOOKS_COLLECTION, NOTES_COLLECTION } from '~/firebase'
+import { CREATED_AT, NOTEBOOKS_COLLECTION, NOTES_COLLECTION } from '~/firebase'
 import { useFirebase } from '~/providers/FirebaseProvider'
 
 export function useGetNotesSubscription({
@@ -20,12 +21,14 @@ export function useGetNotesSubscription({
 
   useEffect(() => {
     if (firebaseContext?.firebaseDb) {
-      const noteDocRef = collection(
+      const notesCollectionRef = collection(
         firebaseContext?.firebaseDb,
         `${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}`
       ) as CollectionReference<Note>
 
-      const unSubscribe = onSnapshot(noteDocRef, (notesSnapshot) => {
+      const notesQuery = query(notesCollectionRef, orderBy(CREATED_AT, 'asc'))
+
+      const unSubscribe = onSnapshot(notesQuery, (notesSnapshot) => {
         const newNotes = notesSnapshot.docs.map((note) => note.data())
 
         if (newNotes) {
