@@ -55,12 +55,11 @@ it('Simple user flow of creating a note', () => {
   // Assert page after note creation
   cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
   cy.findByRole('link', { name: UNTITLED }).should('be.visible')
-  cy.location('pathname').should('include', '/edit')
 
   cy.findByLabelText(NOTE_NAME_LABEL).should('have.value', UNTITLED)
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.focused')
 
-  cy.findByRole('link', { name: VIEW_NOTE_NAME }).should('be.visible')
+  cy.findByRole('button', { name: VIEW_NOTE_NAME }).should('be.visible')
   cy.findByRole('link', { name: 'Delete note' }).should('be.visible')
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
@@ -76,7 +75,7 @@ it('Simple user flow of creating a note', () => {
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
   // View note
-  cy.findByRole('link', { name: VIEW_NOTE_NAME }).click()
+  cy.findByRole('button', { name: VIEW_NOTE_NAME }).click()
   cy.findByText(newNote.content).should('be.visible')
 })
 
@@ -103,8 +102,7 @@ it('Should be able to delete note in both view and edit', () => {
   cy.findByRole('heading', { name: GENERAL_NOTES }).should('be.visible')
   cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
 
-  cy.findByRole('link', { name: VIEW_NOTE_NAME }).click()
-  cy.location('pathname').should('include', '/view')
+  cy.findByRole('button', { name: VIEW_NOTE_NAME }).click()
   cy.findByRole('heading', { name: UNTITLED }).should('be.visible')
 
   // Delete note from view
@@ -129,7 +127,7 @@ it('Should be able to delete note in both view and edit', () => {
   cy.findByRole('link', { name: UNTITLED }).should('not.exist')
   cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
   cy.findByRole('link', { name: UNTITLED }).should('be.visible').click()
-  cy.findByRole('link', { name: EDIT_NOTE_NAME }).click()
+  cy.findByRole('button', { name: EDIT_NOTE_NAME }).click()
 
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.visible')
 
@@ -208,11 +206,11 @@ it('Should be able to create new notebook, note and delete note & notebook', () 
   cy.findByRole('link', { name: note.name }).should('be.visible')
 
   // View note
-  cy.findByRole('link', { name: VIEW_NOTE_NAME }).click()
+  cy.findByRole('button', { name: VIEW_NOTE_NAME }).click()
   cy.findByRole('heading', { name: note.name }).should('be.visible')
 
   // Edit note
-  cy.findByRole('link', { name: EDIT_NOTE_NAME }).click()
+  cy.findByRole('button', { name: EDIT_NOTE_NAME }).click()
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.visible')
   cy.findByLabelText('Markdown content').type(note.content)
   cy.findByRole('status', { name: SAVING }).should('be.visible')
