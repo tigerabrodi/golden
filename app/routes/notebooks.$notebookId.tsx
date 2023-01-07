@@ -133,7 +133,7 @@ export default function Notebook() {
             notes.map((note) => (
               <Link
                 key={note.id}
-                to={`./${note.id}/view`}
+                to={`./${note.id}`}
                 aria-selected={noteId === note.id}
                 prefetch="intent"
               >
@@ -175,7 +175,7 @@ export const action = async ({ request, params }: DataFunctionArgs) => {
 
     const newNoteId = await createNewNoteWithUserId({ ownerId, notebookId })
 
-    return redirect(`./${newNoteId}/edit?${IS_NEWLY_CREATED}=true`)
+    return redirect(`./${newNoteId}?${IS_NEWLY_CREATED}=true`)
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
