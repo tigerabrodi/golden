@@ -105,7 +105,7 @@
     background-color: var(--colors-navy-600);
     color: var(--colors-white);
     font-weight: 500;
-    font-size: calc(1rem * 20 / 16);
+    font-size: calc(1rem * 16 / 16);
     font-family: 'Roboto Mono';
     padding: 10px;
   }
@@ -132,6 +132,16 @@
     h5,
     h6 {
       margin-top: 8px;
+    }
+
+    ul {
+      row-gap: 2px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    li {
+      margin-left: 15px;
     }
   }
 }

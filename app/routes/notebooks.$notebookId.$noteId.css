@@ -95,7 +95,7 @@
   background-color: var(--colors-navy-600);
   color: var(--colors-white);
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-family: "Roboto Mono";
   padding: 10px;
 }
@@ -119,6 +119,14 @@
 .note .markdown h5,
 .note .markdown h6 {
   margin-top: 8px;
+}
+.note .markdown ul {
+  row-gap: 2px;
+  display: flex;
+  flex-direction: column;
+}
+.note .markdown li {
+  margin-left: 15px;
 }
 
 /*# sourceMappingURL=notebooks.$notebookId.$noteId.css.map */
