@@ -1,16 +1,29 @@
 import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
-import type { Dispatch, SetStateAction } from 'react'
-import type { Note } from '~/types'
+import type { Status } from '~/types'
 
 import { json, redirect } from '@remix-run/node'
-import { Outlet, useLoaderData } from '@remix-run/react'
+import { Link, Outlet, useLoaderData, useTransition } from '@remix-run/react'
+import { doc, updateDoc } from 'firebase/firestore'
+import debounce from 'lodash.debounce'
+import { useCallback, useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { z } from 'zod'
 import { zx } from 'zodix'
 
+import { IS_NEWLY_CREATED } from './notebooks.$notebookId'
 import styles from './notebooks.$notebookId.$noteId.css'
 
-import { getNote, getServerFirebase } from '~/firebase'
+import {
+  getNote,
+  getServerFirebase,
+  NOTEBOOKS_COLLECTION,
+  NOTES_COLLECTION,
+} from '~/firebase'
 import { useGetNoteSubscription } from '~/hooks'
+import { CloudCheck, Delete, EditPen, Eye } from '~/icons'
+import { useFirebase } from '~/providers'
 import { authGetSession } from '~/sessions/auth.server'
 import {
   validationCommitSession,
@@ -25,6 +38,8 @@ import {
 } from '~/types'
 import { getCookie } from '~/utils/getCookie'
 
+export const NOTE_NAME = 'noteName'
+
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }]
 }
@@ -36,6 +51,10 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
     params,
     z.object({ noteId: z.string(), notebookId: z.string() })
   )
+
+  const { isNewlyCreated } = zx.parseQuery(request, {
+    [IS_NEWLY_CREATED]: zx.BoolAsString.optional(),
+  })
 
   const [authSession, validationSession] = await Promise.all([
     authGetSession(getCookie(request)),
@@ -75,7 +94,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
       })
     }
 
-    return json({ initialNote, notebookId })
+    return json({ initialNote, notebookId, isNewlyCreated })
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
@@ -87,24 +106,213 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   }
 }
 
-export type NoteOutletContext = {
-  note: Note
-  setNote: Dispatch<SetStateAction<Note>>
-}
+type State = 'view' | 'edit'
 
 export default function NoteRoute() {
-  const { initialNote, notebookId } = useLoaderData<typeof loader>()
+  const { initialNote, notebookId, isNewlyCreated } =
+    useLoaderData<typeof loader>()
 
   const { note, setNote } = useGetNoteSubscription({
     initialNote,
     notebookId,
   })
 
-  const context: NoteOutletContext = { note, setNote }
+  const transition = useTransition()
+  const firebaseContext = useFirebase()
+
+  const [savingNameStatus, setSavingNameStatus] = useState<Status>('idle')
+  const [savingContentStatus, setSavingContentStatus] = useState<Status>('idle')
+  const [state, setState] = useState<State>(isNewlyCreated ? 'edit' : 'view')
+
+  const isSaving =
+    savingNameStatus === 'loading' || savingContentStatus === 'loading'
+  const savingLabel = isSaving ? 'Saving' : 'Saved'
+
+  // useCallback is required for debounce to work
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleNoteNameChange = useCallback(
+    debounce(async (noteName: string) => {
+      if (firebaseContext?.firebaseDb) {
+        setSavingNameStatus('loading')
+        const noteDoc = doc(
+          firebaseContext.firebaseDb,
+          // Using initial id here because note.id could be stale
+          `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${initialNote.id}`
+        )
+        await updateDoc(noteDoc, { name: noteName })
+        setSavingNameStatus('success')
+      }
+    }, 500),
+    [firebaseContext]
+  )
+
+  // useCallback is required for debounce to work
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleNoteContentChange = useCallback(
+    debounce(async (noteContent: string) => {
+      if (firebaseContext?.firebaseDb) {
+        setSavingContentStatus('loading')
+        const noteDoc = doc(
+          firebaseContext.firebaseDb,
+          // Using initial id here because note.id could be stale
+          `/${NOTEBOOKS_COLLECTION}/${notebookId}/${NOTES_COLLECTION}/${initialNote.id}`
+        )
+        await updateDoc(noteDoc, { content: noteContent })
+        setSavingContentStatus('success')
+      }
+    }, 500),
+    [firebaseContext]
+  )
+
+  const isNavigatingToAnotherNote = transition.state === 'loading'
+  const isSubscribedNoteStale = note.id !== initialNote.id
+  const isNoteNameTheSame = initialNote.name === note.name
+  const isNoteContentTheSame = initialNote.content === note.content
+
+  const shouldNotUpdateNoteName =
+    isNavigatingToAnotherNote ||
+    isNoteNameTheSame ||
+    isSubscribedNoteStale ||
+    state === 'view'
+
+  const shouldNotUpdateNoteContent =
+    isNavigatingToAnotherNote ||
+    isNoteContentTheSame ||
+    isSubscribedNoteStale ||
+    state === 'view'
+
+  useEffect(() => {
+    if (shouldNotUpdateNoteName) {
+      return
+    }
+
+    handleNoteNameChange(note.name)?.catch((error) => {
+      console.error(error)
+      setSavingNameStatus('error')
+    })
+  }, [note.name, shouldNotUpdateNoteName, handleNoteNameChange])
+
+  useEffect(() => {
+    if (shouldNotUpdateNoteContent) {
+      return
+    }
+
+    handleNoteContentChange(note.content)?.catch((error) => {
+      console.error(error)
+      setSavingContentStatus('error')
+    })
+  }, [note.content, shouldNotUpdateNoteContent, handleNoteContentChange])
 
   return (
     <div className="note">
-      <Outlet context={context} />
+      {state === 'view' ? (
+        <div className="header">
+          <h2>{note.name}</h2>
+          <button
+            className="edit-view"
+            aria-label="Edit note"
+            type="button"
+            onClick={() => setState('edit')}
+          >
+            <span>Edit</span>
+            <EditPen className="pen" />
+          </button>
+
+          <Link
+            to={`./delete`}
+            className="delete"
+            prefetch="intent"
+            aria-label="Delete note"
+          >
+            <span>Delete</span>
+            <Delete />
+          </Link>
+        </div>
+      ) : (
+        <div className="header">
+          <input
+            type="text"
+            aria-label="Note name"
+            id={NOTE_NAME}
+            name={NOTE_NAME}
+            autoFocus={isNewlyCreated}
+            value={note.name}
+            onChange={(event) =>
+              setNote((prevNote) => ({
+                ...prevNote,
+                name: event.target.value,
+              }))
+            }
+          />
+          <button
+            className="edit-view"
+            aria-label="View note"
+            type="button"
+            onClick={() => setState('view')}
+          >
+            <span>View</span>
+            <Eye className="eye" />
+          </button>
+
+          <div className="status" role="status" aria-label={savingLabel}>
+            <CloudCheck />
+            <span>{savingLabel}</span>
+          </div>
+
+          <Link
+            to="./delete"
+            className="delete"
+            prefetch="intent"
+            aria-label="Delete note"
+          >
+            <span>Delete</span>
+            <Delete />
+          </Link>
+        </div>
+      )}
+
+      {state === 'view' ? (
+        <div className="markdown scroll-bar">
+          <ReactMarkdown
+            children={note.content}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || '')
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    children={String(children).replace(/\n$/, '')}
+                    // @ts-ignore
+                    style={nord}
+                    language={match[1]}
+                    PreTag="div"
+                    {...props}
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              },
+            }}
+          />
+        </div>
+      ) : (
+        <textarea
+          name="content"
+          aria-label="Markdown content"
+          placeholder="Your notes here..."
+          value={note.content}
+          className="scroll-bar"
+          onChange={(event) =>
+            setNote((prevNote) => ({
+              ...prevNote,
+              content: event.target.value,
+            }))
+          }
+        />
+      )}
+
+      <Outlet />
     </div>
   )
 }
