@@ -99,34 +99,17 @@
   font-family: "Roboto Mono";
   padding: 10px;
 }
-.note .markdown {
-  padding: 10px;
-  color: var(--colors-white);
+.note .preview {
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  row-gap: 15px;
+  padding: 10px;
 }
-.note .markdown *:first-of-type {
-  margin-top: 0;
+.note .preview pre {
+  padding: 7px;
+  font-size: 95%;
 }
-.note .markdown h1,
-.note .markdown h2,
-.note .markdown h3 {
-  margin-top: 15px;
-}
-.note .markdown h4,
-.note .markdown h5,
-.note .markdown h6 {
-  margin-top: 8px;
-}
-.note .markdown ul {
-  row-gap: 2px;
-  display: flex;
-  flex-direction: column;
-}
-.note .markdown li {
-  margin-left: 15px;
+.note .preview pre div {
+  margin: 0 !important;
+  padding: 8px !important;
 }
 
 /*# sourceMappingURL=notebooks.$notebookId.$noteId.css.map */

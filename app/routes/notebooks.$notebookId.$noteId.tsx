@@ -4,11 +4,13 @@ import type { Status } from '~/types'
 import { json, redirect } from '@remix-run/node'
 import { Link, Outlet, useLoaderData, useTransition } from '@remix-run/react'
 import { doc, updateDoc } from 'firebase/firestore'
+import markdownStyles from 'github-markdown-css/github-markdown-dark.css'
 import debounce from 'lodash.debounce'
 import { useCallback, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import remarkGfm from 'remark-gfm'
 import { z } from 'zod'
 import { zx } from 'zodix'
 
@@ -41,7 +43,10 @@ import { getCookie } from '~/utils/getCookie'
 export const NOTE_NAME = 'noteName'
 
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }]
+  return [
+    { rel: 'stylesheet', href: styles },
+    { rel: 'stylesheet', href: markdownStyles },
+  ]
 }
 
 export const loader = async ({ params, request }: DataFunctionArgs) => {
@@ -219,7 +224,7 @@ export default function NoteRoute() {
           </button>
 
           <Link
-            to={`./delete`}
+            to="./delete"
             className="delete"
             prefetch="intent"
             aria-label="Delete note"
@@ -272,9 +277,10 @@ export default function NoteRoute() {
       )}
 
       {state === 'view' ? (
-        <div className="markdown scroll-bar">
+        <div className="preview markdown-body scroll-bar">
           <ReactMarkdown
             children={note.content}
+            remarkPlugins={[remarkGfm]}
             components={{
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || '')

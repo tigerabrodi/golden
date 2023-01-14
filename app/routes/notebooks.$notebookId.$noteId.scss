@@ -110,38 +110,17 @@
     padding: 10px;
   }
 
-  .markdown {
-    padding: 10px;
-    color: var(--colors-white);
+  .preview {
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+    padding: 10px;
 
-    *:first-of-type {
-      margin-top: 0;
-    }
-
-    h1,
-    h2,
-    h3 {
-      margin-top: 15px;
-    }
-
-    h4,
-    h5,
-    h6 {
-      margin-top: 8px;
-    }
-
-    ul {
-      row-gap: 2px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    li {
-      margin-left: 15px;
+    pre {
+      padding: 7px;
+      font-size: 95%;
+      div {
+        margin: 0 !important;
+        padding: 8px !important;
+      }
     }
   }
 }
