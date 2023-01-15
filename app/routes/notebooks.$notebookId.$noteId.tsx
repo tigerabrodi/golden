@@ -17,6 +17,7 @@ import { zx } from 'zodix'
 import { IS_NEWLY_CREATED } from './notebooks.$notebookId'
 import styles from './notebooks.$notebookId.$noteId.css'
 
+import { Editor } from '~/components'
 import {
   getNote,
   getServerFirebase,
@@ -69,9 +70,10 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   const token = authSession.get(ACCESS_TOKEN)
 
   try {
-    const { uid: ownerId } = await firebaseAdminAuth.verifySessionCookie(token)
-
-    const initialNote = await getNote({ notebookId, noteId })
+    const [{ uid: ownerId }, initialNote] = await Promise.all([
+      firebaseAdminAuth.verifySessionCookie(token),
+      getNote({ notebookId, noteId }),
+    ])
 
     if (!initialNote) {
       validationSession.flash(
@@ -99,7 +101,11 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
       })
     }
 
-    return json({ initialNote, notebookId, isNewlyCreated })
+    return json({
+      initialNote,
+      notebookId,
+      isNewlyCreated,
+    })
   } catch (error) {
     validationSession.flash(VALIDATION_STATE_ERROR, NOT_LOGGED_IN_ERROR_MESSAGE)
 
@@ -111,7 +117,7 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
   }
 }
 
-type State = 'view' | 'edit'
+export type State = 'view' | 'edit'
 
 export default function NoteRoute() {
   const { initialNote, notebookId, isNewlyCreated } =
@@ -208,6 +214,20 @@ export default function NoteRoute() {
     })
   }, [note.content, shouldNotUpdateNoteContent, handleNoteContentChange])
 
+  useEffect(() => {
+    setState('view')
+  }, [initialNote])
+
+  const handleContentChange = useCallback(
+    (content: string) => {
+      setNote((prevNote) => ({
+        ...prevNote,
+        content,
+      }))
+    },
+    [setNote]
+  )
+
   return (
     <div className="note">
       {state === 'view' ? (
@@ -277,7 +297,10 @@ export default function NoteRoute() {
       )}
 
       {state === 'view' ? (
-        <div className="preview markdown-body scroll-bar">
+        <div
+          className="preview markdown-body scroll-bar"
+          style={{ padding: note.content === '' ? 0 : '10px' }}
+        >
           <ReactMarkdown
             children={note.content}
             remarkPlugins={[remarkGfm]}
@@ -303,19 +326,7 @@ export default function NoteRoute() {
           />
         </div>
       ) : (
-        <textarea
-          name="content"
-          aria-label="Markdown content"
-          placeholder="Your notes here..."
-          value={note.content}
-          className="scroll-bar"
-          onChange={(event) =>
-            setNote((prevNote) => ({
-              ...prevNote,
-              content: event.target.value,
-            }))
-          }
-        />
+        <Editor onChange={handleContentChange} content={note.content} />
       )}
 
       <Outlet />
