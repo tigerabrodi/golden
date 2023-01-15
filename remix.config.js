@@ -36,6 +36,8 @@ module.exports = {
     /^markdown-table*/,
     /^markdown*/,
     /^react-syntax-highlighter*/,
+    /^codemirror.*/,
+    /^replit\/codemirror-vim$/,
   ],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
