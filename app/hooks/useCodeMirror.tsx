@@ -1,7 +1,9 @@
+import { defaultKeymap } from '@codemirror/commands'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { EditorState } from '@codemirror/state'
 import { oneDark } from '@codemirror/theme-one-dark'
+import { keymap } from '@codemirror/view'
 import { vim } from '@replit/codemirror-vim'
 import { EditorView, basicSetup } from 'codemirror'
 import { useEffect, useMemo, useRef } from 'react'
@@ -22,6 +24,7 @@ export const useCodeMirror = ({ onChange, content }: Props) => {
       extensions: [
         basicSetup,
         vim(),
+        keymap.of(defaultKeymap),
         markdown({
           base: markdownLanguage,
           codeLanguages: languages,
@@ -53,6 +56,8 @@ export const useCodeMirror = ({ onChange, content }: Props) => {
       state: startState,
       parent: refContainer.current,
     })
+
+    viewRef.current.focus()
 
     return () => {
       viewRef.current?.destroy()
