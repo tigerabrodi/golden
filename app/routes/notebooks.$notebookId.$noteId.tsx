@@ -214,10 +214,6 @@ export default function NoteRoute() {
     })
   }, [note.content, shouldNotUpdateNoteContent, handleNoteContentChange])
 
-  useEffect(() => {
-    setState('view')
-  }, [initialNote])
-
   const handleContentChange = useCallback(
     (content: string) => {
       setNote((prevNote) => ({
