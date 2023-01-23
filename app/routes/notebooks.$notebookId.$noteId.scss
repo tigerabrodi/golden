@@ -105,14 +105,34 @@
     .cm-line {
       font-family: 'Source Code Pro', monospace;
       font-size: calc(1rem * 16 / 16);
+      color: lightgray;
 
       .ͼ11 {
-        font-size: calc(1rem * 18 / 16);
+        font-size: calc(1rem * 20 / 16);
+        color: var(--colors-white);
+      }
+
+      .ͼ10 {
+        font-size: calc(1rem * 16 / 16);
+        font-weight: 500;
+        color: lightblue;
       }
 
       .ͼ13 {
         font-size: calc(1rem * 18 / 16);
+        font-weight: 500;
+        color: lightsteelblue;
       }
+    }
+
+    .cm-cursor {
+      width: 4px;
+    }
+
+    .cm-fat-cursor {
+      outline: solid 2px lightsteelblue;
+      background-color: lightsteelblue;
+      width: 4px;
     }
   }
 

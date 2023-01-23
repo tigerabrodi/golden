@@ -97,12 +97,29 @@
 .note .editor-wrapper .cm-line {
   font-family: "Source Code Pro", monospace;
   font-size: 1rem;
+  color: lightgray;
 }
 .note .editor-wrapper .cm-line .ͼ11 {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  color: var(--colors-white);
+}
+.note .editor-wrapper .cm-line .ͼ10 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: lightblue;
 }
 .note .editor-wrapper .cm-line .ͼ13 {
   font-size: 1.125rem;
+  font-weight: 500;
+  color: lightsteelblue;
+}
+.note .editor-wrapper .cm-cursor {
+  width: 4px;
+}
+.note .editor-wrapper .cm-fat-cursor {
+  outline: solid 2px lightsteelblue;
+  background-color: lightsteelblue;
+  width: 4px;
 }
 .note .preview {
   overflow-y: auto;
