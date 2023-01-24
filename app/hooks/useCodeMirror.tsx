@@ -10,10 +10,15 @@ import { useEffect, useMemo, useRef } from 'react'
 
 type Props = {
   content: string
+  isNoteNewlyCreated: boolean
   onChange: (state: EditorState) => void
 }
 
-export const useCodeMirror = ({ onChange, content }: Props) => {
+export const useCodeMirror = ({
+  onChange,
+  content,
+  isNoteNewlyCreated,
+}: Props) => {
   const refContainer = useRef<HTMLDivElement>(null)
   const viewRef = useRef<EditorView | null>(null)
   const contentRef = useRef(content)
@@ -57,13 +62,15 @@ export const useCodeMirror = ({ onChange, content }: Props) => {
       parent: refContainer.current,
     })
 
-    viewRef.current.focus()
+    if (!isNoteNewlyCreated) {
+      viewRef.current.focus()
+    }
 
     return () => {
       viewRef.current?.destroy()
       viewRef.current = null
     }
-  }, [startState])
+  }, [isNoteNewlyCreated, startState])
 
   return { refContainer }
 }
