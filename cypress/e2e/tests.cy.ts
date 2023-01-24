@@ -14,6 +14,7 @@ const CREATE_NEW_NOTE_NAME = 'Create new note'
 const VIEW_NOTE_NAME = 'View note'
 const EDIT_NOTE_NAME = 'Edit note'
 const NO_NOTES_NAME = 'No notes.'
+const CONTENT_CLASS = '.cm-content'
 
 beforeEach(() => {
   cy.clearCookies()
@@ -56,21 +57,25 @@ it('Simple user flow of creating a note', () => {
   cy.findByRole('button', { name: CREATE_NEW_NOTE_NAME }).click()
   cy.findByRole('link', { name: UNTITLED }).should('be.visible')
 
+  cy.findByRole('button', { name: VIEW_NOTE_NAME }).should('be.visible')
   cy.findByLabelText(NOTE_NAME_LABEL).should('have.value', UNTITLED)
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.focused')
 
-  cy.findByRole('button', { name: VIEW_NOTE_NAME }).should('be.visible')
   cy.findByRole('link', { name: 'Delete note' }).should('be.visible')
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
   // Change Title
-  cy.findByLabelText(NOTE_NAME_LABEL).clear().type(newNote.name)
+  cy.findByLabelText(NOTE_NAME_LABEL).clear()
+  cy.findByLabelText(NOTE_NAME_LABEL).should('have.value', '')
+  cy.findByRole('status', { name: SAVED }).should('be.visible')
+  cy.findByLabelText(NOTE_NAME_LABEL).type(newNote.name)
   cy.findByRole('status', { name: SAVING }).should('be.visible')
   cy.findByRole('link', { name: UNTITLED }).should('not.exist')
   cy.findByRole('link', { name: newNote.name }).should('be.visible')
 
   // Add content
-  cy.findByLabelText('Markdown content').type(newNote.content)
+  cy.get(CONTENT_CLASS).click().type('a').type(newNote.content)
+
   cy.findByRole('status', { name: SAVING }).should('be.visible')
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
@@ -151,7 +156,7 @@ it('Should be able to delete note in both view and edit', () => {
   })
 })
 
-it('Should be able to create new notebook, note and delete note & notebook', () => {
+it.only('Should be able to create new notebook, note and delete note & notebook', () => {
   const user = createNewUser()
   const note = createNewNote()
   const notebook = createNewNotebook()
@@ -212,7 +217,7 @@ it('Should be able to create new notebook, note and delete note & notebook', () 
   // Edit note
   cy.findByRole('button', { name: EDIT_NOTE_NAME }).click()
   cy.findByLabelText(NOTE_NAME_LABEL).should('be.visible')
-  cy.findByLabelText('Markdown content').type(note.content)
+  cy.get(CONTENT_CLASS).click().type('a').type(note.content)
   cy.findByRole('status', { name: SAVING }).should('be.visible')
   cy.findByRole('status', { name: SAVED }).should('be.visible')
 
