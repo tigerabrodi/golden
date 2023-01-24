@@ -205,6 +205,7 @@ function NoteRouteComp() {
     state === 'view'
 
   useEffect(() => {
+    // Could happen when navigating to another note
     if (shouldNotUpdateNoteName) {
       return
     }
@@ -216,6 +217,7 @@ function NoteRouteComp() {
   }, [note.name, shouldNotUpdateNoteName, handleNoteNameChange])
 
   useEffect(() => {
+    // Could happen when navigating to another note
     if (shouldNotUpdateNoteContent) {
       return
     }
@@ -226,6 +228,22 @@ function NoteRouteComp() {
     })
   }, [note.content, shouldNotUpdateNoteContent, handleNoteContentChange])
 
+  useEffect(() => {
+    // short cut to toggle between edit and view mode
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === 'z') {
+        setState((prevState) => (prevState === 'edit' ? 'view' : 'edit'))
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [])
+
+  // So the editor doesn't re-render all the time
   const handleContentChange = useCallback(
     (content: string) => {
       setNote((prevNote) => ({
