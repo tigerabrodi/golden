@@ -2,7 +2,13 @@ import type { DataFunctionArgs, LinksFunction } from '@remix-run/node'
 import type { Status } from '~/types'
 
 import { json, redirect } from '@remix-run/node'
-import { Link, Outlet, useLoaderData, useTransition } from '@remix-run/react'
+import {
+  Link,
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useTransition,
+} from '@remix-run/react'
 import { doc, updateDoc } from 'firebase/firestore'
 import markdownStyles from 'github-markdown-css/github-markdown-dark.css'
 import debounce from 'lodash.debounce'
@@ -120,6 +126,12 @@ export const loader = async ({ params, request }: DataFunctionArgs) => {
 export type State = 'view' | 'edit'
 
 export default function NoteRoute() {
+  const location = useLocation()
+
+  return <NoteRouteComp key={location.key} />
+}
+
+function NoteRouteComp() {
   const { initialNote, notebookId, isNewlyCreated } =
     useLoaderData<typeof loader>()
 
@@ -322,7 +334,11 @@ export default function NoteRoute() {
           />
         </div>
       ) : (
-        <Editor onChange={handleContentChange} content={note.content} />
+        <Editor
+          onChange={handleContentChange}
+          content={note.content}
+          isNoteNewlyCreated={Boolean(isNewlyCreated)}
+        />
       )}
 
       <Outlet />
