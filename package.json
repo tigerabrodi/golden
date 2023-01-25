@@ -36,6 +36,7 @@
     "@vercel/node": "^2.4.4",
     "codemirror": "^6.0.1",
     "concurrently": "^7.6.0",
+    "extend": "^3.0.2",
     "firebase": "^9.13.0",
     "firebase-admin": "^11.2.0",
     "github-markdown-css": "^5.1.0",

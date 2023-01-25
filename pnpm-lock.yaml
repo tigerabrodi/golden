@@ -39,6 +39,7 @@ specifiers:
   eslint: ^8.23.1
   eslint-plugin-import: ^2.26.0
   eslint-plugin-remix: ^1.0.1
+  extend: ^3.0.2
   firebase: ^9.13.0
   firebase-admin: ^11.2.0
   github-markdown-css: ^5.1.0
@@ -80,6 +81,7 @@ dependencies:
   '@vercel/node': 2.8.0
   codemirror: 6.0.1
   concurrently: 7.6.0
+  extend: 3.0.2
   firebase: 9.15.0
   firebase-admin: 11.3.0
   github-markdown-css: 5.1.0
