@@ -43,6 +43,7 @@
     "is-buffer": "^2.0.5",
     "is-plain-obj": "^4.1.0",
     "lodash.debounce": "^4.0.8",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-toast": "^2.4.0",
