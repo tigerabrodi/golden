@@ -41,6 +41,7 @@
     "firebase-admin": "^11.2.0",
     "github-markdown-css": "^5.1.0",
     "is-buffer": "^2.0.5",
+    "is-plain-obj": "^4.1.0",
     "lodash.debounce": "^4.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
