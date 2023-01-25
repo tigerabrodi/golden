@@ -6,6 +6,7 @@ specifiers:
   '@codemirror/lang-markdown': ^6.0.5
   '@codemirror/language': ^6.4.0
   '@codemirror/language-data': ^6.1.0
+  '@codemirror/lint': ^6.1.0
   '@codemirror/search': ^6.2.3
   '@codemirror/state': ^6.2.0
   '@codemirror/theme-one-dark': ^6.1.0
@@ -62,6 +63,7 @@ dependencies:
   '@codemirror/lang-markdown': 6.0.5
   '@codemirror/language': 6.4.0
   '@codemirror/language-data': 6.1.0_a4vbhepr4qhxm5cldqd4jpyase
+  '@codemirror/lint': 6.1.0
   '@codemirror/search': 6.2.3
   '@codemirror/state': 6.2.0
   '@codemirror/theme-one-dark': 6.1.0
