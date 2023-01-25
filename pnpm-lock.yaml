@@ -44,6 +44,7 @@ specifiers:
   fault: ^2.0.1
   firebase: ^9.13.0
   firebase-admin: ^11.2.0
+  format: ^0.2.2
   github-markdown-css: ^5.1.0
   highlight.js: ^11.7.0
   is-buffer: ^2.0.5
@@ -94,6 +95,7 @@ dependencies:
   fault: 2.0.1
   firebase: 9.15.0
   firebase-admin: 11.3.0
+  format: 0.2.2
   github-markdown-css: 5.1.0
   highlight.js: 11.7.0
   is-buffer: 2.0.5
