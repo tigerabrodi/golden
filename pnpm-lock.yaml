@@ -46,7 +46,6 @@ specifiers:
   firebase-admin: ^11.2.0
   format: ^0.2.2
   github-markdown-css: ^5.1.0
-  highlight.js: ^11.7.0
   is-buffer: ^2.0.5
   is-plain-obj: ^4.1.0
   lodash.debounce: ^4.0.8
@@ -70,11 +69,11 @@ specifiers:
 
 dependencies:
   '@babel/runtime': 7.20.13
-  '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+  '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
   '@codemirror/commands': 6.1.3
   '@codemirror/lang-markdown': 6.0.5
   '@codemirror/language': 6.4.0
-  '@codemirror/language-data': 6.1.0_a4vbhepr4qhxm5cldqd4jpyase
+  '@codemirror/language-data': 6.1.0_gmyi65uhzwvxi3jypseoerg22u
   '@codemirror/lint': 6.1.0
   '@codemirror/search': 6.2.3
   '@codemirror/state': 6.2.0
@@ -89,15 +88,14 @@ dependencies:
   '@replit/codemirror-vim': 6.0.4_g6347wkkpkxquduyx7qtw3mrwm
   '@types/react-syntax-highlighter': 15.5.5
   '@vercel/node': 2.8.0
-  codemirror: 6.0.1
+  codemirror: 6.0.1_@lezer+common@1.0.2
   concurrently: 7.6.0
   extend: 3.0.2
   fault: 2.0.1
   firebase: 9.15.0
-  firebase-admin: 11.3.0
+  firebase-admin: 11.3.0_@firebase+app-types@0.9.0
   format: 0.2.2
   github-markdown-css: 5.1.0
-  highlight.js: 11.7.0
   is-buffer: 2.0.5
   is-plain-obj: 4.1.0
   lodash.debounce: 4.0.8
@@ -105,7 +103,7 @@ dependencies:
   prop-types: 15.8.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-  react-hot-toast: 2.4.0_sfoxds7t5ydpegc3knd667wn6m
+  react-hot-toast: 2.4.0_pwge5r66yg44rq5pj4ruhckhdm
   react-is: 18.2.0
   react-markdown: 8.0.4_odph5zpxnhqxi2epe2unwomxxu
   react-syntax-highlighter: 15.5.0_react@17.0.2
@@ -115,7 +113,7 @@ dependencies:
   uuid: 9.0.0
   zod: 3.19.1
   zod-form-data: 1.2.4_zod@3.19.1
-  zodix: 0.3.2_zod@3.19.1
+  zodix: 0.3.2_u3gymd54yncku6klo7xtys36iq
 
 devDependencies:
   '@faker-js/faker': 7.6.0
@@ -1457,12 +1455,13 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
 
-  /@codemirror/autocomplete/6.4.0_a2usvefncw26hnlzt6oyk4qbeq:
+  /@codemirror/autocomplete/6.4.0_3jfk5zzaw77h3sqp5wt6b7asku:
     resolution: {integrity: sha512-HLF2PnZAm1s4kGs30EiqKMgD7XsYaQ0XJnMR0rofEWQ5t5D60SfqpDIkIh1ze5tiEbyUWm8+VJ6W1/erVvBMIA==}
     peerDependencies:
       '@codemirror/language': ^6.0.0
       '@codemirror/state': ^6.0.0
       '@codemirror/view': ^6.0.0
+      '@lezer/common': ^1.0.0
     dependencies:
       '@codemirror/language': 6.4.0
       '@codemirror/state': 6.2.0
@@ -1486,22 +1485,23 @@ packages:
       '@lezer/cpp': 1.0.0
     dev: false
 
-  /@codemirror/lang-css/6.0.1_@codemirror+view@6.7.3:
+  /@codemirror/lang-css/6.0.1_nzpoxphwgc7witc3f5hdaoweju:
     resolution: {integrity: sha512-rlLq1Dt0WJl+2epLQeAsfqIsx3lGu4HStHCJu95nGGuz2P2fNugbU3dQYafr2VRjM4eMC9HviI6jvS98CNtG5w==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
       '@codemirror/language': 6.4.0
       '@codemirror/state': 6.2.0
       '@lezer/css': 1.1.1
     transitivePeerDependencies:
       - '@codemirror/view'
+      - '@lezer/common'
     dev: false
 
   /@codemirror/lang-html/6.4.1:
     resolution: {integrity: sha512-9NzhWKAkWEwjXC04DKM6yrHnxIPFTqZNLDhWfZiKLMxUiU++XoHz9n6D5EPp1igBmX0vXcpFb5Kud6XzIJhZ4A==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
-      '@codemirror/lang-css': 6.0.1_@codemirror+view@6.7.3
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
+      '@codemirror/lang-css': 6.0.1_nzpoxphwgc7witc3f5hdaoweju
       '@codemirror/lang-javascript': 6.1.2
       '@codemirror/language': 6.4.0
       '@codemirror/state': 6.2.0
@@ -1521,7 +1521,7 @@ packages:
   /@codemirror/lang-javascript/6.1.2:
     resolution: {integrity: sha512-OcwLfZXdQ1OHrLiIcKCn7MqZ7nx205CMKlhe+vL88pe2ymhT9+2P+QhwkYGxMICj8TDHyp8HFKVwpiisUT7iEQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
       '@codemirror/language': 6.4.0
       '@codemirror/lint': 6.1.0
       '@codemirror/state': 6.2.0
@@ -1558,15 +1558,16 @@ packages:
       '@lezer/php': 1.0.0
     dev: false
 
-  /@codemirror/lang-python/6.1.1_a4vbhepr4qhxm5cldqd4jpyase:
+  /@codemirror/lang-python/6.1.1_gmyi65uhzwvxi3jypseoerg22u:
     resolution: {integrity: sha512-AddGMIKUssUAqaDKoxKWA5GAzy/CVE0eSY7/ANgNzdS1GYBkp6N49XKEyMElkuN04UsZ+bTIQdj+tVV75NMwJw==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
       '@codemirror/language': 6.4.0
       '@lezer/python': 1.1.1
     transitivePeerDependencies:
       - '@codemirror/state'
       - '@codemirror/view'
+      - '@lezer/common'
     dev: false
 
   /@codemirror/lang-rust/6.0.1:
@@ -1576,16 +1577,17 @@ packages:
       '@lezer/rust': 1.0.0
     dev: false
 
-  /@codemirror/lang-sql/6.3.3_@codemirror+view@6.7.3:
+  /@codemirror/lang-sql/6.3.3_nzpoxphwgc7witc3f5hdaoweju:
     resolution: {integrity: sha512-VNsHju8500fkiDyDU8jZyGQ8M0iXU0SmfeCoCeAYkACcEFlX63BOT8311pICXyw43VYRbS23w54RgSEQmixGjQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
       '@codemirror/language': 6.4.0
       '@codemirror/state': 6.2.0
       '@lezer/highlight': 1.1.3
       '@lezer/lr': 1.3.1
     transitivePeerDependencies:
       - '@codemirror/view'
+      - '@lezer/common'
     dev: false
 
   /@codemirror/lang-wast/6.0.1:
@@ -1599,7 +1601,7 @@ packages:
   /@codemirror/lang-xml/6.0.2_@codemirror+view@6.7.3:
     resolution: {integrity: sha512-JQYZjHL2LAfpiZI2/qZ/qzDuSqmGKMwyApYmEUUCTxLM4MWS7sATUEfIguZQr9Zjx/7gcdnewb039smF6nC2zw==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
       '@codemirror/language': 6.4.0
       '@codemirror/state': 6.2.0
       '@lezer/common': 1.0.2
@@ -1608,20 +1610,20 @@ packages:
       - '@codemirror/view'
     dev: false
 
-  /@codemirror/language-data/6.1.0_a4vbhepr4qhxm5cldqd4jpyase:
+  /@codemirror/language-data/6.1.0_gmyi65uhzwvxi3jypseoerg22u:
     resolution: {integrity: sha512-g9V23fuLRI9AEbpM6bDy1oquqgpFlIDHTihUhL21NPmxp+x67ZJbsKk+V71W7/Bj8SCqEO1PtqQA/tDGgt1nfw==}
     dependencies:
       '@codemirror/lang-cpp': 6.0.2
-      '@codemirror/lang-css': 6.0.1_@codemirror+view@6.7.3
+      '@codemirror/lang-css': 6.0.1_nzpoxphwgc7witc3f5hdaoweju
       '@codemirror/lang-html': 6.4.1
       '@codemirror/lang-java': 6.0.1
       '@codemirror/lang-javascript': 6.1.2
       '@codemirror/lang-json': 6.0.1
       '@codemirror/lang-markdown': 6.0.5
       '@codemirror/lang-php': 6.0.1
-      '@codemirror/lang-python': 6.1.1_a4vbhepr4qhxm5cldqd4jpyase
+      '@codemirror/lang-python': 6.1.1_gmyi65uhzwvxi3jypseoerg22u
       '@codemirror/lang-rust': 6.0.1
-      '@codemirror/lang-sql': 6.3.3_@codemirror+view@6.7.3
+      '@codemirror/lang-sql': 6.3.3_nzpoxphwgc7witc3f5hdaoweju
       '@codemirror/lang-wast': 6.0.1
       '@codemirror/lang-xml': 6.0.2_@codemirror+view@6.7.3
       '@codemirror/language': 6.4.0
@@ -1629,6 +1631,7 @@ packages:
     transitivePeerDependencies:
       - '@codemirror/state'
       - '@codemirror/view'
+      - '@lezer/common'
     dev: false
 
   /@codemirror/language/6.4.0:
@@ -1910,12 +1913,13 @@ packages:
       - encoding
     dev: false
 
-  /@firebase/auth-interop-types/0.1.7_@firebase+util@1.7.3:
+  /@firebase/auth-interop-types/0.1.7_aqkrfbrcnr5kenxqdpztnx2xau:
     resolution: {integrity: sha512-yA/dTveGGPcc85JP8ZE/KZqfGQyQTBCV10THdI8HTlP1GDvNrhr//J5jAt58MlsCOaO3XmC4DqScPBbtIsR/EA==}
     peerDependencies:
       '@firebase/app-types': 0.x
       '@firebase/util': 1.x
     dependencies:
+      '@firebase/app-types': 0.9.0
       '@firebase/util': 1.7.3
     dev: false
 
@@ -1968,11 +1972,11 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@firebase/database-compat/0.2.10:
+  /@firebase/database-compat/0.2.10_@firebase+app-types@0.9.0:
     resolution: {integrity: sha512-fK+IgUUqVKcWK/gltzDU+B1xauCOfY6vulO8lxoNTkcCGlSxuTtwsdqjGkFmgFRMYjXFWWJ6iFcJ/vXahzwCtA==}
     dependencies:
       '@firebase/component': 0.5.21
-      '@firebase/database': 0.13.10
+      '@firebase/database': 0.13.10_@firebase+app-types@0.9.0
       '@firebase/database-types': 0.9.17
       '@firebase/logger': 0.3.4
       '@firebase/util': 1.7.3
@@ -2008,10 +2012,10 @@ packages:
       '@firebase/util': 1.7.3
     dev: false
 
-  /@firebase/database/0.13.10:
+  /@firebase/database/0.13.10_@firebase+app-types@0.9.0:
     resolution: {integrity: sha512-KRucuzZ7ZHQsRdGEmhxId5jyM2yKsjsQWF9yv0dIhlxYg0D8rCVDZc/waoPKA5oV3/SEIoptF8F7R1Vfe7BCQA==}
     dependencies:
-      '@firebase/auth-interop-types': 0.1.7_@firebase+util@1.7.3
+      '@firebase/auth-interop-types': 0.1.7_aqkrfbrcnr5kenxqdpztnx2xau
       '@firebase/component': 0.5.21
       '@firebase/logger': 0.3.4
       '@firebase/util': 1.7.3
@@ -4212,16 +4216,18 @@ packages:
     resolution: {integrity: sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==}
     dev: false
 
-  /codemirror/6.0.1:
+  /codemirror/6.0.1_@lezer+common@1.0.2:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
-      '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
+      '@codemirror/autocomplete': 6.4.0_3jfk5zzaw77h3sqp5wt6b7asku
       '@codemirror/commands': 6.1.3
       '@codemirror/language': 6.4.0
       '@codemirror/lint': 6.1.0
       '@codemirror/search': 6.2.3
       '@codemirror/state': 6.2.0
       '@codemirror/view': 6.7.3
+    transitivePeerDependencies:
+      - '@lezer/common'
     dev: false
 
   /collection-visit/1.0.0:
@@ -6135,12 +6141,12 @@ packages:
       path-exists: 4.0.0
     dev: true
 
-  /firebase-admin/11.3.0:
+  /firebase-admin/11.3.0_@firebase+app-types@0.9.0:
     resolution: {integrity: sha512-8ENXUu9Lm6YTc5zzOqlF222M/KwsV/EDZ5UwwPPEU5XfCa1Ebj7K/SgLFdinjGu1NxkSnqu07UDpPhmAtW3b5w==}
     engines: {node: '>=14'}
     dependencies:
       '@fastify/busboy': 1.1.0
-      '@firebase/database-compat': 0.2.10
+      '@firebase/database-compat': 0.2.10_@firebase+app-types@0.9.0
       '@firebase/database-types': 0.9.17
       '@types/node': 18.11.13
       jsonwebtoken: 8.5.1
@@ -6539,10 +6545,12 @@ packages:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
-  /goober/2.1.11:
+  /goober/2.1.11_csstype@3.1.1:
     resolution: {integrity: sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==}
     peerDependencies:
       csstype: ^3.0.10
+    dependencies:
+      csstype: 3.1.1
     dev: false
 
   /google-auth-library/8.7.0:
@@ -9357,14 +9365,14 @@ packages:
       react: 17.0.2
       scheduler: 0.20.2
 
-  /react-hot-toast/2.4.0_sfoxds7t5ydpegc3knd667wn6m:
+  /react-hot-toast/2.4.0_pwge5r66yg44rq5pj4ruhckhdm:
     resolution: {integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
     dependencies:
-      goober: 2.1.11
+      goober: 2.1.11_csstype@3.1.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     transitivePeerDependencies:
@@ -11102,12 +11110,13 @@ packages:
     resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
     dev: false
 
-  /zodix/0.3.2_zod@3.19.1:
+  /zodix/0.3.2_u3gymd54yncku6klo7xtys36iq:
     resolution: {integrity: sha512-iVT1QXLNrUo0QNkmWRitm1KdR8XgLLzqrLGUzooD/iXJfdlAnIYssfz1eniXN9KPJkCS2Qyu7y2RMLDns4xksQ==}
     peerDependencies:
       '@remix-run/server-runtime': 1.x
       zod: 3.x
     dependencies:
+      '@remix-run/server-runtime': 1.8.2_sfoxds7t5ydpegc3knd667wn6m
       zod: 3.19.1
     dev: false
 
