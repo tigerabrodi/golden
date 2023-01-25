@@ -39,6 +39,7 @@ module.exports = {
     /^codemirror.*/,
     /^replit\/codemirror-vim$/,
     'is-plain-obj',
+    'lowlight',
   ],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
