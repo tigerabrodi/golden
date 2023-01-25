@@ -15,6 +15,7 @@
     "dev": "concurrently \"npm run sass\" \"remix dev\""
   },
   "dependencies": {
+    "@babel/runtime": "^7.20.13",
     "@codemirror/autocomplete": "^6.4.0",
     "@codemirror/commands": "^6.1.3",
     "@codemirror/lang-markdown": "^6.0.5",
