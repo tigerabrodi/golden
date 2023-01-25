@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@codemirror/autocomplete': ^6.4.0
   '@codemirror/commands': ^6.1.3
   '@codemirror/lang-markdown': ^6.0.5
   '@codemirror/language': ^6.4.0
@@ -56,6 +57,7 @@ specifiers:
   zodix: ^0.3.2
 
 dependencies:
+  '@codemirror/autocomplete': 6.4.0_a2usvefncw26hnlzt6oyk4qbeq
   '@codemirror/commands': 6.1.3
   '@codemirror/lang-markdown': 6.0.5
   '@codemirror/language': 6.4.0
