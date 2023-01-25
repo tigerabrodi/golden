@@ -38,6 +38,7 @@ module.exports = {
     /^react-syntax-highlighter*/,
     /^codemirror.*/,
     /^replit\/codemirror-vim$/,
+    'is-plain-obj',
   ],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
