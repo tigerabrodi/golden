@@ -14,7 +14,7 @@ import markdownStyles from 'github-markdown-css/github-markdown-dark.css'
 import debounce from 'lodash.debounce'
 import { useCallback, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { Prism } from 'react-syntax-highlighter'
 import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { z } from 'zod'
@@ -334,7 +334,7 @@ function NoteRouteComp() {
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || '')
                 return !inline && match ? (
-                  <SyntaxHighlighter
+                  <Prism
                     children={String(children).replace(/\n$/, '')}
                     // @ts-ignore
                     style={nord}
