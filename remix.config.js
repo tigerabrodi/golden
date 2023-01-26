@@ -1,18 +1,13 @@
-const { flatRoutes } = require('remix-flat-routes')
-
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
-  serverBuildTarget: 'vercel',
-  // When running locally in development mode, we use the built in remix
-  // server. This does not understand the vercel lambda module format,
-  // so we default back to the standard build output.
-  server: process.env.NODE_ENV === 'development' ? undefined : './server.js',
-  ignoredRouteFiles: ['**/*'],
-  routes: async (defineRoutes) => {
-    return flatRoutes('routes', defineRoutes, {
-      basePath: '/', // optional base path (defaults to /)
-      ignoredRouteFiles: ['*.css', '*.scss'], // same as remix config
-    })
+  serverBuildTarget: 'netlify',
+  server:
+    process.env.NETLIFY || process.env.NETLIFY_LOCAL
+      ? './server.js'
+      : undefined,
+  ignoredRouteFiles: ['*.css', '*.scss'], // same as remix config
+  future: {
+    v2_routeConvention: true,
   },
   serverDependenciesToBundle: [
     /^rehype.*/,
