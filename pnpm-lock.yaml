@@ -48,6 +48,7 @@ specifiers:
   firebase-admin: ^11.2.0
   format: ^0.2.2
   github-markdown-css: ^5.1.0
+  hastscript: ^7.2.0
   highlight.js: ^11.7.0
   is-buffer: ^2.0.5
   lodash.debounce: ^4.0.8
@@ -101,6 +102,7 @@ dependencies:
   firebase-admin: 11.3.0_@firebase+app-types@0.9.0
   format: 0.2.2
   github-markdown-css: 5.1.0
+  hastscript: 7.2.0
   highlight.js: 11.7.0
   is-buffer: 2.0.5
   lodash.debounce: 4.0.8
