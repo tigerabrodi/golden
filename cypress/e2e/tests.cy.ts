@@ -156,7 +156,7 @@ it('Should be able to delete note in both view and edit', () => {
   })
 })
 
-it.only('Should be able to create new notebook, note and delete note & notebook', () => {
+it('Should be able to create new notebook, note and delete note & notebook', () => {
   const user = createNewUser()
   const note = createNewNote()
   const notebook = createNewNotebook()

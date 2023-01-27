@@ -49,16 +49,13 @@ specifiers:
   firebase-admin: ^11.2.0
   github-markdown-css: ^5.1.0
   lodash.debounce: ^4.0.8
-  prop-types: ^15.8.1
   react: ^17.0.2
   react-dom: ^17.0.2
   react-hot-toast: ^2.4.0
-  react-is: ^18.2.0
   react-markdown: ^8.0.4
   react-syntax-highlighter: ^15.5.0
   remark-gfm: ^3.0.1
   sass: ^1.56.2
-  style-to-object: ^0.4.1
   typescript: ^4.7.4
   uuid: ^9.0.0
   zod: ^3.19.1
@@ -96,16 +93,13 @@ dependencies:
   firebase-admin: 11.3.0_@firebase+app-types@0.9.0
   github-markdown-css: 5.1.0
   lodash.debounce: 4.0.8
-  prop-types: 15.8.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-hot-toast: 2.4.0_pwge5r66yg44rq5pj4ruhckhdm
-  react-is: 18.2.0
   react-markdown: 8.0.4_odph5zpxnhqxi2epe2unwomxxu
   react-syntax-highlighter: 15.5.0_react@17.0.2
   remark-gfm: 3.0.1
   sass: 1.56.2
-  style-to-object: 0.4.1
   uuid: 9.0.0
   zod: 3.19.1
   zod-form-data: 1.2.4_zod@3.19.1
@@ -10710,12 +10704,6 @@ packages:
     resolution: {integrity: sha512-CzFnRRXhzWIdItT3OmF8SQfWyahHhjq3HwcMNCNLn+N7klOOqPjMeG/4JSu77D7ypZdGvSzvkrbyeTMizz2VrA==}
     dependencies:
       inline-style-parser: 0.1.1
-
-  /style-to-object/0.4.1:
-    resolution: {integrity: sha512-HFpbb5gr2ypci7Qw+IOhnP2zOU7e77b+rzM+wTzXzfi1PrtBCX0E7Pk4wL4iTLnhzZ+JgEGAhX81ebTg/aYjQw==}
-    dependencies:
-      inline-style-parser: 0.1.1
-    dev: false
 
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
