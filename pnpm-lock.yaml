@@ -38,6 +38,7 @@ specifiers:
   cypress: ^10.9.0
   cypress-file-upload: ^5.0.8
   cypress-slow-down: ^1.2.1
+  escape-string-regexp: ^5.0.0
   eslint: ^8.23.1
   eslint-plugin-import: ^2.26.0
   eslint-plugin-remix: ^1.0.1
@@ -91,6 +92,7 @@ dependencies:
   codemirror: 6.0.1_@lezer+common@1.0.2
   concurrently: 7.6.0
   cross-env: 7.0.3
+  escape-string-regexp: 5.0.0
   extend: 3.0.2
   fault: 2.0.1
   firebase: 9.15.0
