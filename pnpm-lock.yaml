@@ -48,6 +48,7 @@ specifiers:
   format: ^0.2.2
   github-markdown-css: ^5.1.0
   highlight.js: ^11.7.0
+  is-buffer: ^2.0.5
   lodash.debounce: ^4.0.8
   lowlight: ^2.8.0
   react: ^17.0.2
@@ -94,6 +95,7 @@ dependencies:
   format: 0.2.2
   github-markdown-css: 5.1.0
   highlight.js: 11.7.0
+  is-buffer: 2.0.5
   lodash.debounce: 4.0.8
   lowlight: 2.8.0
   react: 17.0.2
