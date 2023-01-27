@@ -13,6 +13,7 @@ specifiers:
   '@codemirror/theme-one-dark': ^6.1.0
   '@codemirror/view': ^6.7.3
   '@faker-js/faker': ^7.6.0
+  '@firebase/app': ^0.9.1
   '@fontsource/roboto': ^4.5.8
   '@fontsource/roboto-mono': ^4.5.8
   '@headlessui/react': ^1.7.4
@@ -87,6 +88,7 @@ dependencies:
   '@codemirror/state': 6.2.0
   '@codemirror/theme-one-dark': 6.1.0
   '@codemirror/view': 6.7.3
+  '@firebase/app': 0.9.1
   '@fontsource/roboto': 4.5.8
   '@fontsource/roboto-mono': 4.5.8
   '@headlessui/react': 1.7.5_sfoxds7t5ydpegc3knd667wn6m
@@ -2222,6 +2224,16 @@ packages:
       tslib: 2.4.1
     dev: false
 
+  /@firebase/app/0.9.1:
+    resolution: {integrity: sha512-Z8wOSol+pvp4CFyY1mW+aqdZlrwhW/ha2YXQ6/avJ56c5Hnvt4k6GktZE6o5NyzvfJTgNHryhMtnEJMIuLaT4w==}
+    dependencies:
+      '@firebase/component': 0.6.1
+      '@firebase/logger': 0.4.0
+      '@firebase/util': 1.9.0
+      idb: 7.0.1
+      tslib: 2.4.1
+    dev: false
+
   /@firebase/auth-compat/0.3.0_z6klzwxqggigirvqix3ggnu6f4:
     resolution: {integrity: sha512-tcofcrQKBOo5Wrz59onWtZDJfVW09auvG/XRh7lZ4yfEWdGerTJXmEdQU6j3E8AnJ3X91BYltNYhh0ZJOoCJqQ==}
     peerDependencies:
@@ -2296,6 +2308,13 @@ packages:
     resolution: {integrity: sha512-9hyNc4OmrXMtthDJq6zyJHll/UIYBWYmMG3rXty2eMeWxHWB0vlsq3AOI+k14PL15aSBAQolv0EZJWVJv/gCEg==}
     dependencies:
       '@firebase/util': 1.8.0
+      tslib: 2.4.1
+    dev: false
+
+  /@firebase/component/0.6.1:
+    resolution: {integrity: sha512-yvKthG0InjFx9aOPnh6gk0lVNfNVEtyq3LwXgZr+hOwD0x/CtXq33XCpqv0sQj5CA4FdMy8OO+y9edI+ZUw8LA==}
+    dependencies:
+      '@firebase/util': 1.9.0
       tslib: 2.4.1
     dev: false
 
@@ -2645,6 +2664,12 @@ packages:
 
   /@firebase/util/1.8.0:
     resolution: {integrity: sha512-clK6pTTxIiLMYz4UrvDTVAs2rIaOiroAuFdX67C0JalvEwzi6Vv8li6xAGj38tkj7Qax06mosM1fQkxf2h4VTg==}
+    dependencies:
+      tslib: 2.4.1
+    dev: false
+
+  /@firebase/util/1.9.0:
+    resolution: {integrity: sha512-oeoq/6Sr9btbwUQs5HPfeww97bf7qgBbkknbDTXpRaph2LZ23O9XLCE5tJy856SBmGQfO4xBZP8dyryLLM2nSQ==}
     dependencies:
       tslib: 2.4.1
     dev: false
