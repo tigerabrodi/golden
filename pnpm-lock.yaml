@@ -51,6 +51,7 @@ specifiers:
   highlight.js: ^11.7.0
   is-buffer: ^2.0.5
   lodash.debounce: ^4.0.8
+  loose-envify: ^1.4.0
   lowlight: ^2.8.0
   prop-types: ^15.8.1
   react: ^17.0.2
@@ -102,6 +103,7 @@ dependencies:
   highlight.js: 11.7.0
   is-buffer: 2.0.5
   lodash.debounce: 4.0.8
+  loose-envify: 1.4.0
   lowlight: 2.8.0
   prop-types: 15.8.1
   react: 17.0.2
