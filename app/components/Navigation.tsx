@@ -10,7 +10,11 @@ export function Navigation() {
 
   return (
     <nav>
-      <Link to="/" className="logo" prefetch="intent">
+      <Link
+        to={rootLoaderData?.isAuthenticated ? '/notebooks' : '/'}
+        className="logo"
+        prefetch="intent"
+      >
         <Diamond />
         <span>Golden</span>
       </Link>
