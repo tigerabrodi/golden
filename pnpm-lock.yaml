@@ -14,6 +14,7 @@ specifiers:
   '@codemirror/view': ^6.7.3
   '@faker-js/faker': ^7.6.0
   '@firebase/app': ^0.9.1
+  '@firebase/app-compat': ^0.2.1
   '@fontsource/roboto': ^4.5.8
   '@fontsource/roboto-mono': ^4.5.8
   '@headlessui/react': ^1.7.4
@@ -89,6 +90,7 @@ dependencies:
   '@codemirror/theme-one-dark': 6.1.0
   '@codemirror/view': 6.7.3
   '@firebase/app': 0.9.1
+  '@firebase/app-compat': 0.2.1
   '@fontsource/roboto': 4.5.8
   '@fontsource/roboto-mono': 4.5.8
   '@headlessui/react': 1.7.5_sfoxds7t5ydpegc3knd667wn6m
@@ -2203,6 +2205,16 @@ packages:
       '@firebase/component': 0.6.0
       '@firebase/logger': 0.4.0
       '@firebase/util': 1.8.0
+      tslib: 2.4.1
+    dev: false
+
+  /@firebase/app-compat/0.2.1:
+    resolution: {integrity: sha512-UgPy2ZO0li0j4hAkaZKY9P1TuJEx5RylhUWPzCb8DZhBm+uHdfsFI9Yr+wMlu6qQH2sWoweFtYU6ljGzxwdctw==}
+    dependencies:
+      '@firebase/app': 0.9.1
+      '@firebase/component': 0.6.1
+      '@firebase/logger': 0.4.0
+      '@firebase/util': 1.9.0
       tslib: 2.4.1
     dev: false
 
