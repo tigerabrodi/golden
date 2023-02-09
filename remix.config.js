@@ -36,6 +36,7 @@ module.exports = {
     'is-plain-obj',
     'lowlight',
     'fault',
+    'escape-string-regexp',
   ],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",

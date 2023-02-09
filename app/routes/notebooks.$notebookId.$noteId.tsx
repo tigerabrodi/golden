@@ -14,8 +14,6 @@ import markdownStyles from 'github-markdown-css/github-markdown-dark.css'
 import debounce from 'lodash.debounce'
 import { useCallback, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { Prism } from 'react-syntax-highlighter'
-import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { z } from 'zod'
 import { zx } from 'zodix'
@@ -332,17 +330,7 @@ function NoteRouteComp() {
             remarkPlugins={[remarkGfm]}
             components={{
               code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || '')
-                return !inline && match ? (
-                  <Prism
-                    children={String(children).replace(/\n$/, '')}
-                    // @ts-ignore
-                    style={nord}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                  />
-                ) : (
+                return (
                   <code className={className} {...props}>
                     {children}
                   </code>
